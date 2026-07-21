@@ -69,6 +69,8 @@ window.addEventListener("mousemove", (e) => {
 // ----------------------------
 
 let lastTouchDistance = 0;
+let lastCenterX = 0;
+let lastCenterY = 0;
 
 viewport.addEventListener("touchstart", (e) => {
 
@@ -87,9 +89,15 @@ viewport.addEventListener("touchstart", (e) => {
 
         lastTouchDistance = getTouchDistance(e);
 
+        lastCenterX =
+            (e.touches[0].clientX + e.touches[1].clientX) / 2;
+
+        lastCenterY =
+            (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
     }
 
-}, { passive: false });
+}, { passive:false });
 
 viewport.addEventListener("touchmove", (e) => {
 
@@ -112,28 +120,69 @@ viewport.addEventListener("touchmove", (e) => {
     // Два пальца — зум
     if (e.touches.length === 2) {
 
+        const rect = viewport.getBoundingClientRect();
+
+        const centerX =
+            (e.touches[0].clientX + e.touches[1].clientX) / 2;
+
+        const centerY =
+            (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+        const mouseX = centerX - rect.width / 2;
+        const mouseY = centerY - rect.height / 2;
+
+        const oldScale = camera.targetScale;
+
         const distance = getTouchDistance(e);
 
-        const zoom = distance / lastTouchDistance;
+        let newScale =
+            oldScale * (distance / lastTouchDistance);
 
-        camera.targetScale *= zoom;
-
-        camera.targetScale = Math.max(
+        newScale = Math.max(
             MIN_SCALE,
-            Math.min(MAX_SCALE, camera.targetScale)
+            Math.min(MAX_SCALE, newScale)
         );
+
+        // Мировая точка под центром пальцев
+        const worldX =
+            (mouseX - camera.targetX) / oldScale;
+
+        const worldY =
+            (mouseY - camera.targetY) / oldScale;
+
+        camera.targetScale = newScale;
+
+        camera.targetX =
+            mouseX - worldX * newScale;
+
+        camera.targetY =
+            mouseY - worldY * newScale;
+
+        // Если пальцы двигаются вместе — панорамирование
+        camera.targetX += centerX - lastCenterX;
+        camera.targetY += centerY - lastCenterY;
+
+        lastCenterX = centerX;
+        lastCenterY = centerY;
 
         lastTouchDistance = distance;
 
     }
 
-}, { passive: false });
+}, { passive:false });
 
-viewport.addEventListener("touchend", () => {
+viewport.addEventListener("touchend", (e) => {
 
     dragging = false;
 
-}, { passive: false });
+    if (e.touches.length === 1) {
+
+        lastX = e.touches[0].clientX;
+        lastY = e.touches[0].clientY;
+
+    }
+
+}, { passive:false });
 
 function getTouchDistance(e){
 
@@ -157,26 +206,26 @@ viewport.addEventListener("wheel", (e) => {
 
     e.preventDefault();
 
-    const zoom = e.deltaY < 0 ? 1.1 : 0.9;
+    const rect = viewport.getBoundingClientRect();
+
+    const mouseX = e.clientX - rect.width / 2;
+    const mouseY = e.clientY - rect.height / 2;
 
     const oldScale = camera.targetScale;
 
-    let newScale = oldScale * zoom;
+    let newScale = oldScale * (e.deltaY < 0 ? 1.1 : 0.9);
 
-    newScale = Math.max(
-        MIN_SCALE,
-        Math.min(MAX_SCALE, newScale)
-    );
+    newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, newScale));
 
-    const rect = viewport.getBoundingClientRect();
-
-    const mx = e.clientX - rect.width / 2;
-    const my = e.clientY - rect.height / 2;
-
-    camera.targetX -= mx * (newScale - oldScale);
-    camera.targetY -= my * (newScale - oldScale);
+    // Мировая точка под курсором ДО изменения масштаба
+    const worldX = (mouseX - camera.targetX) / oldScale;
+    const worldY = (mouseY - camera.targetY) / oldScale;
 
     camera.targetScale = newScale;
+
+    // Смещаем камеру так, чтобы эта же мировая точка осталась под курсором
+    camera.targetX = mouseX - worldX * newScale;
+    camera.targetY = mouseY - worldY * newScale;
 
 }, { passive: false });
 
