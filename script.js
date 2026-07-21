@@ -1,7 +1,7 @@
 const viewport = document.getElementById("viewport");
 const world = document.getElementById("world");
 const scene = document.getElementById("scene");
-
+const PAN_SPEED = 1.35; // попробуй 1.2–1.8
 // ----------------------------
 // Camera
 // ----------------------------
@@ -56,8 +56,8 @@ window.addEventListener("mousemove", (e) => {
     const dx = e.clientX - lastX;
     const dy = e.clientY - lastY;
 
-    camera.targetX += dx;
-    camera.targetY += dy;
+    camera.targetX += dx * PAN_SPEED;
+    camera.targetY += dy * PAN_SPEED;
 
     lastX = e.clientX;
     lastY = e.clientY;
@@ -109,8 +109,8 @@ viewport.addEventListener("touchmove", (e) => {
         const x = e.touches[0].clientX;
         const y = e.touches[0].clientY;
 
-        camera.targetX += x - lastX;
-        camera.targetY += y - lastY;
+        camera.targetX += (x - lastX) * PAN_SPEED;
+        camera.targetY += (y - lastY) * PAN_SPEED;
 
         lastX = x;
         lastY = y;
