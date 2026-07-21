@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    background: #090909;
+
+    font-family: sans-serif;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    touch-action: none;
+}
+
+body{
+    cursor: grab;
+}
+
+body:active{
+    cursor: grabbing;
+}
+
+
+/* ================================
+        CAMERA VIEWPORT
+================================ */
+
+#viewport{
+    position: fixed;
+
+    inset: 0;
+
+    overflow: hidden;
+
+}
+
+
+/* ================================
+            WORLD
+================================ */
+
+#world{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform-origin:top left;
+}
+
+
+/* ================================
+            BACKGROUND
+================================ */
+
+#scene{
+    display:block;
+    width:auto;
+    height:auto;
+
+    pointer-events:auto;
+}
+
+
+/* ================================
+        FUTURE OBJECTS
+================================ */
+
+.item{
+
+    position:absolute;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s ease,
+        filter .25s ease,
+        opacity .25s ease;
+
+    will-change:transform;
+
+}
+
+.item:hover{
+
+    transform:scale(1.05);
+
+    filter:brightness(1.1);
+
+}
+
+.item:active{
+
+    transform:scale(.96);
+
+}
+
+
+/* ================================
+        PRELOADER
+================================ */
+
+.fade{
+
+    position:fixed;
+
+    inset:0;
+
+    background:black;
+
+    pointer-events:none;
+
+    opacity:0;
+
+    transition:opacity .6s;
+
+}
+
+.fade.show{
+
+    opacity:1;
+
+}
+#background{
+    position: fixed;
+    inset: -5%;
+
+    background-image: url("scene-blur.jpg");
+    background-size: cover;
+    background-position: center;
+
+    filter: blur(5px) brightness(.45);
+
+    transform: scale(1.15);
+
+    z-index: 0;
+}
+
+/* ================================
+        BIRTHDAY TITLE
+================================ */
+
+#birthday-title{
+    position:absolute;
+
+    left:50%;
+    top:-5px;
+
+    transform:translate(-50%, -100%);
+
+    white-space:nowrap;
+
+    font-family:
+        "Cinzel",
+        "Cormorant Garamond",
+        serif;
+
+    font-size:56px;
+
+    font-weight:700;
+
+    letter-spacing:8px;
+
+    color:#fff;
+
+    text-shadow:
+        0 0 8px rgba(255,255,255,.45),
+        0 0 18px rgba(255,180,220,.25);
+
+    animation:
+        titleFloat 4s ease-in-out infinite,
+        titleGlow 3s ease-in-out infinite;
+
+    pointer-events:none;
+
+    z-index:1000;
+}
+
+@keyframes titleFloat{
+
+    0%,100%{
+        transform:translate(-50%,-100%) translateY(0);
+    }
+
+    50%{
+        transform:translate(-50%,-100%) translateY(-8px);
+    }
+
+}
+
+@keyframes titleGlow{
+
+    0%,100%{
+        opacity:.85;
+        filter:brightness(1);
+    }
+
+    50%{
+        opacity:1;
+        filter:brightness(1.25);
+    }
+
+}
