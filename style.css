@@ -16,8 +16,6 @@ body {
 
     user-select: none;
     -webkit-user-select: none;
-
-    touch-action: none;
 }
 
 body{
@@ -34,12 +32,11 @@ body:active{
 ================================ */
 
 #viewport{
-    position: fixed;
+    position:fixed;
+    inset:0;
+    overflow:hidden;
 
-    inset: 0;
-
-    overflow: hidden;
-
+    touch-action:none;
 }
 
 

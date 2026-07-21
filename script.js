@@ -65,6 +65,91 @@ window.addEventListener("mousemove", (e) => {
 });
 
 // ----------------------------
+// Touch Drag
+// ----------------------------
+
+let lastTouchDistance = 0;
+
+viewport.addEventListener("touchstart", (e) => {
+
+    if (e.touches.length === 1) {
+
+        dragging = true;
+
+        lastX = e.touches[0].clientX;
+        lastY = e.touches[0].clientY;
+
+    }
+
+    if (e.touches.length === 2) {
+
+        dragging = false;
+
+        lastTouchDistance = getTouchDistance(e);
+
+    }
+
+}, { passive: false });
+
+viewport.addEventListener("touchmove", (e) => {
+
+    e.preventDefault();
+
+    // Один палец — перемещение
+    if (e.touches.length === 1) {
+
+        const x = e.touches[0].clientX;
+        const y = e.touches[0].clientY;
+
+        camera.targetX += x - lastX;
+        camera.targetY += y - lastY;
+
+        lastX = x;
+        lastY = y;
+
+    }
+
+    // Два пальца — зум
+    if (e.touches.length === 2) {
+
+        const distance = getTouchDistance(e);
+
+        const zoom = distance / lastTouchDistance;
+
+        camera.targetScale *= zoom;
+
+        camera.targetScale = Math.max(
+            MIN_SCALE,
+            Math.min(MAX_SCALE, camera.targetScale)
+        );
+
+        lastTouchDistance = distance;
+
+    }
+
+}, { passive: false });
+
+viewport.addEventListener("touchend", () => {
+
+    dragging = false;
+
+}, { passive: false });
+
+function getTouchDistance(e){
+
+    const dx =
+        e.touches[0].clientX -
+        e.touches[1].clientX;
+
+    const dy =
+        e.touches[0].clientY -
+        e.touches[1].clientY;
+
+    return Math.hypot(dx,dy);
+
+}
+
+// ----------------------------
 // Zoom
 // ----------------------------
 
