@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cinematic Universe Journey — Birthday Odyssey</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Atmospheric Overlays -->
+    <div id="vignette-overlay"></div>
+    <canvas id="grain-canvas"></canvas>
+
+    <!-- Mobile Orientation Guard -->
+    <div id="orientation-warning">
+        <div class="phone-icon-wrapper">
+            <div class="phone-icon"></div>
+        </div>
+        <h2>Rotate Your Device</h2>
+        <p>Please switch to landscape mode for the best experience.</p>
+    </div>
+
+    <!-- Top Left Navigation HUD (Кнопка Назад на главную) -->
+    <div id="nav-hud">
+        <a href="index.html" class="hud-btn link-btn" aria-label="Return Home">
+            <span class="hud-icon">←</span>
+            <span>НА ГЛАВНУЮ</span>
+        </a>
+    </div>
+
+    <!-- World Title Overlay -->
+    <div id="world-title-overlay" class="hidden">
+        <h1 id="world-title-text">STRANGER THINGS</h1>
+        <div id="world-subtitle-text">CHAPTER I</div>
+    </div>
+
+    <!-- Navigation Scroll Hint -->
+    <div id="scroll-hint">
+        <span class="scroll-arrow">←</span>
+        <span>you can swipe</span>
+        <span class="scroll-arrow">→</span>
+    </div>
+
+    <!-- Main Viewport and Track -->
+    <main id="cinematic-viewport">
+        <div id="world-track">
+            <!-- Dynamically populated by gallery.js -->
+        </div>
+    </main>
+
+    <!-- Photo Modal -->
+    <div id="modal-backdrop" class="modal-backdrop hidden">
+        <div class="modal-card">
+            <button id="modal-close-btn" class="modal-close">&times;</button>
+            <div id="modal-content" class="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- End Journey Overlay -->
+    <div id="end-screen-overlay" class="modal-backdrop hidden">
+        <div class="end-card">
+            <h2 class="end-title">СПАСИБО ЗА ПРОСМОТР! ❤️</h2>
+            <p class="end-subtitle">Путешествие по мирам завершено</p>
+            <div class="end-buttons">
+                <button id="restart-btn" class="end-btn primary">
+                    <span class="btn-icon">🔄</span>
+                    <span>ПОСМОТРЕТЬ ЕЩЕ РАЗ</span>
+                </button>
+                <a href="index.html" class="end-btn secondary">
+                    <span class="btn-icon">🏠</span>
+                    <span>ВЕРНУТЬСЯ НА ГЛАВНУЮ</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
