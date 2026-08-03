@@ -784,7 +784,6 @@ a{color:inherit;text-decoration:none;}
   display:flex; justify-content:space-between;
   font-family:var(--mono); font-size:12px; color:var(--dimmer);
 }
-/* volume controls removed */
 .ep-player-endcard{
   position:absolute;
   inset:auto 20px 22px 20px;
@@ -817,65 +816,6 @@ a{color:inherit;text-decoration:none;}
 @media (min-width:900px){
   .ep-player-stage{padding:40px;}
 }
-
-/* ---- Room scene: full-bleed interactive shelf (iframe) ---- */
-#roomScene{
-  align-items:stretch; justify-content:stretch;
-  background:#090909;
-  overflow:hidden;
-}
-.room-shelf-frame{
-  position:relative;
-  width:100%; height:100%;
-  display:flex;
-}
-.room-shelf-header{
-  position:absolute; top:0; left:0; right:0; z-index:2;
-  padding:calc(18px + env(safe-area-inset-top, 0px)) 18px 26px;
-  text-align:center;
-  background:linear-gradient(180deg, rgba(9,9,9,.9) 0%, rgba(9,9,9,.55) 55%, transparent 100%);
-  pointer-events:none;
-}
-.room-back-btn{
-  position:absolute;
-  top:calc(18px + env(safe-area-inset-top, 0px));
-  left:18px;
-  z-index:3;
-  padding:12px 16px;
-  border-radius:999px;
-  background:rgba(255,255,255,.1);
-  border:1px solid rgba(255,255,255,.18);
-  color:#fff;
-  font-size:14px;
-  backdrop-filter:blur(12px);
-  cursor:pointer;
-  transition:transform .2s ease, background .2s ease, border-color .2s ease;
-  pointer-events:auto;
-}
-.room-back-btn:hover{
-  transform:scale(1.03);
-  background:rgba(255,255,255,.16);
-  border-color:rgba(255,255,255,.28);
-}
-.room-back-btn:active{
-  transform:scale(.97);
-}
-.room-title{
-  font-family:var(--display); font-size:26px; text-align:center;
-  color:var(--gold); letter-spacing:.5px;
-}
-.room-sub{
-  text-align:center; font-size:12.5px; color:var(--dim);
-  margin-top:6px; max-width:320px; margin-left:auto; margin-right:auto;
-  line-height:1.6;
-}
-.shelf-frame{
-  flex:1 1 auto;
-  width:100%; height:100%;
-  border:0; display:block;
-  background:#090909;
-}
-
 
 /* ---------- Larger screens ---------- */
 @media (min-width:560px){
@@ -928,7 +868,6 @@ a{color:inherit;text-decoration:none;}
 }
 
 </style>
-<base target="_blank">
 </head>
 <body>
 
@@ -1056,7 +995,6 @@ a{color:inherit;text-decoration:none;}
           <span id="epDuration">0:00</span>
         </div>
       </div>
-      <!-- volume controls removed (handled via device/system) -->
     </div>
     <div class="ep-player-endcard" id="epPlayerEndcard" aria-hidden="true">
       <div class="ep-player-endcard-copy" id="epEndCopy"></div>
@@ -1067,54 +1005,23 @@ a{color:inherit;text-decoration:none;}
   <button class="ep-player-close" id="epPlayerClose" aria-label="Закрыть">✕</button>
 </div>
 
-<!-- ============ ROOM SCENE — интерактивная 2D-полка ============ -->
-<div class="overlay" id="roomScene">
-  <div class="room-shelf-frame">
-    <button class="room-back-btn" id="roomBackBtn" type="button">← Назад</button>
-    <div class="room-shelf-header">
-      <div class="room-title">Комната воспоминаний</div>
-      <p class="room-sub">Двигай пальцем, приближай двумя пальцами и нажимай на предметы ✨</p>
-    </div>
-    <iframe class="shelf-frame" id="shelfFrame" src="slide.html" title="Полка воспоминаний" loading="lazy"></iframe>
-  </div>
-</div>
-
-<style>
-@keyframes tailWag{0%,100%{transform:rotate(0deg);}50%{transform:rotate(-14deg);}}
-.eye-blink{animation:blink .25s ease;}
-@keyframes blink{0%,100%{transform:scaleY(1);}50%{transform:scaleY(.1);}}
-.mouth-smile{d:path("M110,96 Q110,101 100,99 M110,96 Q110,101 120,99");}
-</style>
-
 <script>
 /* ============================================================
    CONFIG — EDIT ME
-   Everything content-related lives here so the sequence above
-   stays generic. Replace image gradients with real photos by
-   swapping the CSS "thumb-a/thumb-b" custom props for
-   background-image, or by adding <img> tags into the cards.
    ============================================================ */
 const CONFIG = {
-  // 1) Episodes shown in the top row. Watching all of them
-  //    (tap = "watch") unlocks the secret sequence.
-  //    src — ссылка на видео эпизода (mp4/webm, можно относительный путь).
-  //    Оставь '' — покажется заглушка, а плитка всё равно отметится просмотренной.
-  //    Плеер сам подстроится под пропорции видео (портрет/альбом).
   episodes: [
-    { n:'E1', title:'Поздравление от Камилы',   who:'Kamila',    a:'#3a2a1c', b:'#1f1412', src:'https://aspazmaster.com/uploads/adimi/greetings/kamila_greeting.mp4' },
-    { n:'E2', title:'Поздравление от Сары',   who:'Sarah',    a:'#3a2a1c', b:'#1f1412', src:'https://aspazmaster.com/uploads/adimi/videos/trailer.mp4' },
     { n:'E3', title:'Поздравление от Айгерим',  who:'Aigerim',  a:'#3a1a1c', b:'#1a1414', src:'https://aspazmaster.com/uploads/adimi/greetings/aigerim_greeting.mp4' },
     { n:'E4', title:'Поздравление от Аян',     who:'Ayan',      a:'#1c2a3a', b:'#141a1f', src:'https://aspazmaster.com/uploads/adimi/greetings/ayan_greeting.mp4' },
+    { n:'E4', title:'Поздравление от Аян',     who:'Ayan',      a:'#1c2a3a', b:'#141a1f', src:'https://aspazmaster.com/uploads/adimi/greetings/zhansaya_greeting.mp4' },
     { n:'E5', title:'Поздравление от Аяулым',  who:'Ayaulym',   a:'#2a1c3a', b:'#171420', src:'https://aspazmaster.com/uploads/adimi/greetings/ayaulym_greeting.mp4' },
     { n:'E6', title:'Поздравление от Замиры',   who:'Zamira',    a:'#2a3a1c', b:'#141a12', src:'https://aspazmaster.com/uploads/adimi/greetings/zamira_greeting.mp4' },
     { n:'E7', title:'Поздравление от Дильназ',   who:'Dilnaz',    a:'#1c3a2a', b:'#14201a', src:'https://aspazmaster.com/uploads/adimi/greetings/dilnaz_greeting.mp4' },
+    { n:'E1', title:'Поздравление от Камилы',   who:'Kamila',    a:'#3a2a1c', b:'#1f1412', src:'https://aspazmaster.com/uploads/adimi/greetings/kamila_greeting.mp4' },
+    { n:'E2', title:'Поздравление от Сары',   who:'Sarah',    a:'#3a2a1c', b:'#1f1412', src:'https://aspazmaster.com/uploads/adimi/greetings/sarah_greeting.mp4' },
   ],
-
-  // 2) Real video for the big reveal. Leave empty to keep the
-  //    friendly placeholder card instead.
-  videoSrc: '', // e.g. 'video/message.mp4'
-
-  petsNeeded: 10, // how many pet taps/rubs trigger the purring moment
+  videoSrc: '',
+  petsNeeded: 10,
 };
 
 /* ============================================================
@@ -1270,18 +1177,12 @@ window.addEventListener('scroll', ()=>{
 document.getElementById('watchBtn').addEventListener('click', ()=>{
   document.getElementById('episodeRow').scrollIntoView({behavior:'smooth', block:'center'});
 });
+
+// Прямой переход на отдельную страницу slide.html
 document.getElementById('infoBtn').addEventListener('click', ()=>{
-  document.body.style.overflow = 'hidden';
-  pauseBaseVideos();
-  showOverlay('roomScene');
+  window.location.href = 'slide.html';
 });
-document.getElementById('roomBackBtn').addEventListener('click', ()=>{
-  hideOverlay('roomScene');
-  document.body.style.overflow = '';
-  if(!epPlayer.classList.contains('active')){
-    resumeBaseVideos();
-  }
-});
+
 document.getElementById('secretBtn').addEventListener('click', startSequence);
 
 /* ============================================================
@@ -1310,11 +1211,9 @@ function runCurtains(){
     });
   });
   setTimeout(()=>{
-    // fully closed — hold for a beat
     setTimeout(()=>{
       hideOverlay('curtainScene');
       runRoom();
-      // reset for potential replay
       setTimeout(()=>{
         left.classList.remove('closed');
         right.classList.remove('closed');
@@ -1324,33 +1223,12 @@ function runCurtains(){
   }, 1150);
 }
 
-/* ---- Video ---- */
-function runVideo(){
-  showOverlay('videoScene');
-  const wrap = document.getElementById('videoWrap');
-  if(CONFIG.videoSrc){
-    wrap.innerHTML = `<video id="personalVideo" autoplay playsinline></video>`;
-    const v = document.getElementById('personalVideo');
-    v.src = CONFIG.videoSrc;
-    v.addEventListener('ended', ()=>{ hideOverlay('videoScene'); runRoom(); });
-    v.play().catch(()=>{});
-  } else {
-    // placeholder already in DOM
-    document.getElementById('videoContinueBtn').onclick = ()=>{
-      hideOverlay('videoScene');
-      runRoom();
-    };
-  }
-}
-
-/* ---- Room ---- */
+/* ---- Room / Slide Navigation ---- */
 function runRoom(){
-  pauseBaseVideos();
-  showOverlay('roomScene');
-  document.body.style.overflow = 'hidden';
+  window.location.href = 'slide.html';
 }
 
-/* ---- Adaptive episode player (портрет/альбом — под пропорции конкретного видео) ---- */
+/* ---- Adaptive episode player ---- */
 const epPlayer = document.getElementById('epPlayer');
 const epPlayerStage = document.getElementById('epPlayerStage');
 const epPlayerVideo = document.getElementById('epPlayerVideo');
@@ -1368,7 +1246,6 @@ const epDuration = document.getElementById('epDuration');
 const epPlayerEndcard = document.getElementById('epPlayerEndcard');
 const epEndCopy = document.getElementById('epEndCopy');
 const epEndActionBtn = document.getElementById('epEndActionBtn');
-const heroBgVideo = document.getElementById('heroBgVideo');
 
 let currentEpCard = null;
 let currentEpisode = null;
@@ -1382,7 +1259,6 @@ function formatTime(time){
   const seconds = Math.floor(time%60).toString().padStart(2,'0');
   return `${minutes}:${seconds}`;
 }
-
 
 function updateProgress(){
   if(!epPlayerVideo.duration || trackingProgress) return;
@@ -1451,9 +1327,6 @@ function pointerToProgress(clientX, clientY){
   const forced = epPlayer.classList.contains('force-landscape');
   let pct;
   if(forced){
-    // rotate(90deg): local horizontal axis becomes vertical on screen.
-    // Local 0 (start) → top of AABB, local 1 (end) → bottom.
-    // If inverted on device: pct = 1 - (clientY - rect.top) / span
     const span = rect.height || 1;
     pct = (clientY - rect.top) / span;
   } else {
@@ -1474,7 +1347,6 @@ function flushScrubSeek(){
 
 function setProgressFromPointer(clientX, clientY, {seek = true, immediate = false} = {}){
   const pct = pointerToProgress(clientX, clientY);
-  // Instant visual feedback (don't wait for video seek / timeupdate)
   epProgressFilled.style.width = `${pct * 100}%`;
   epProgressHandle.style.left = `${pct * 100}%`;
   if(epPlayerVideo.duration){
@@ -1486,7 +1358,6 @@ function setProgressFromPointer(clientX, clientY, {seek = true, immediate = fals
         if(scrubSeekRaf){ cancelAnimationFrame(scrubSeekRaf); scrubSeekRaf = null; }
         flushScrubSeek();
       } else if(!scrubSeekRaf){
-        // Coalesce seeks to one per frame — kills lag without losing responsiveness
         scrubSeekRaf = requestAnimationFrame(flushScrubSeek);
       }
     }
@@ -1563,11 +1434,8 @@ function closeEpisodePlayer(){
   resetEndcard();
   currentEpCard = null;
   currentEpisode = null;
-  if(!document.getElementById('roomScene').classList.contains('active')){
-    resumeBaseVideos();
-  }
+  resumeBaseVideos();
 }
-
 
 function handleEndAction(){
   const hasNext = currentIndex < CONFIG.episodes.length - 1;
@@ -1583,7 +1451,6 @@ function handleEndAction(){
   }
 }
 
-// Orientation and metadata
 function applyVideoOrientation(){
   if(!epPlayerVideo.videoWidth || !epPlayerVideo.videoHeight) return;
 
@@ -1637,19 +1504,16 @@ epProgressLine.addEventListener('pointerdown', (e)=>{
   e.preventDefault();
   e.stopPropagation();
   trackingProgress = true;
-  // Capture pointer so drag continues even if finger leaves the thin bar
   try { epProgressLine.setPointerCapture(e.pointerId); } catch(_){}
   setProgressFromPointer(e.clientX, e.clientY, {seek: true, immediate: true});
   showControls();
 
   const onMove = (moveEvent)=>{
     moveEvent.preventDefault();
-    // Visual every move; seek coalesced to 1/frame to avoid lag
     setProgressFromPointer(moveEvent.clientX, moveEvent.clientY, {seek: true});
   };
   const onUp = (upEvent)=>{
     trackingProgress = false;
-    // Final precise seek on release
     setProgressFromPointer(upEvent.clientX, upEvent.clientY, {seek: true, immediate: true});
     scrubTargetTime = null;
     try { epProgressLine.releasePointerCapture(upEvent.pointerId); } catch(_){}
@@ -1662,8 +1526,6 @@ epProgressLine.addEventListener('pointerdown', (e)=>{
   document.addEventListener('pointerup', onUp);
   document.addEventListener('pointercancel', onUp);
 });
-
-/* volume event handlers removed */
 
 document.getElementById('epPlayerClose').addEventListener('click', closeEpisodePlayer);
 epPlayer.addEventListener('click', (e)=>{
@@ -1730,7 +1592,6 @@ readyQuestion.querySelectorAll('.start-btn').forEach((button)=>{
 });
 
 showControls();
-
 </script>
 </body>
 </html>
