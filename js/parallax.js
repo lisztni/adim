@@ -15,15 +15,15 @@ export class ParallaxEngine {
         this.startX = 0;
         this.dragStartX = 0;
 
-        // Синхронизировано с шириной секции 2000px
-        this.universeWidth = 2000;
+        // Синхронизировано с шириной 3200px
+        this.universeWidth = 3200;
         this.currentUniverseIndex = -1;
 
         this.isAutoScrolling = false;
         this.isInitialReady = false;
         this.isPausedByModal = false;
         this.isJourneyEnded = false;
-        this.autoScrollSpeed = 2.3;
+        this.autoScrollSpeed = 1.8;
         this.resumeTimeout = null;
         this.resumeDelay = 2500;
 
@@ -141,6 +141,7 @@ export class ParallaxEngine {
         this.track.style.transform = `translate3d(${-this.currentX}px, 0, 0)`;
 
         const sections = document.querySelectorAll('.universe-section');
+        // Исправлена опечатка: было section.forEach, стало sections.forEach
         sections.forEach((section) => {
             const bg = section.querySelector('.layer-bg');
             const photos = section.querySelector('.layer-photos');

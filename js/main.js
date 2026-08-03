@@ -7,6 +7,8 @@ import { ModalManager } from './modal.js';
 document.addEventListener('DOMContentLoaded', () => {
     const trackContainer = document.getElementById('world-track');
     const viewportContainer = document.getElementById('cinematic-viewport');
+    const startOverlay = document.getElementById('start-screen-overlay');
+    const startBtn = document.getElementById('start-journey-btn');
     const endOverlay = document.getElementById('end-screen-overlay');
     const restartBtn = document.getElementById('restart-btn');
     
@@ -53,43 +55,30 @@ document.addEventListener('DOMContentLoaded', () => {
         endOverlay.classList.remove('hidden');
     };
 
-    // Создаем ParallaxEngine (автоскролл временно заблокирован)
     engine = new ParallaxEngine(viewportContainer, trackContainer, onWorldChange, onJourneyEnd);
     engine.updateMaxScroll();
 
     // =============================================================
-    // УМНОЕ ОЖИДАНИЕ ЗАГРУЗКИ ПЕРВОГО ЧАПТЕРА
+    // КНОПКА "НАЧАТЬ ПУТЕШЕСТВИЕ" — МГНОВЕННЫЙ ЗАПУСК С КЛИКА
     // =============================================================
-    if (videoElements.length > 0) {
-        const firstVideo = videoElements[0];
-        firstVideo.preload = 'auto'; // Принудительно запрашиваем 1-е видео с сервера
+    startBtn.addEventListener('click', () => {
+        // 1. Скрываем стартовое окно
+        startOverlay.classList.add('hidden');
 
-        let isStarted = false;
-        const startJourneyWhenReady = () => {
-            if (!isStarted) {
-                isStarted = true;
-                onWorldChange(0);
-                engine.startInitialAutoScroll();
-            }
-        };
+        // 2. Разблокируем аудио и видео в контексте прямого клика
+        videoManager.unlockAndStart();
 
-        // Если видео уже успело закешироваться и готово
-        if (firstVideo.readyState >= 3) {
-            startJourneyWhenReady();
-        } else {
-            firstVideo.addEventListener('canplay', startJourneyWhenReady, { once: true });
-            firstVideo.addEventListener('playing', startJourneyWhenReady, { once: true });
+        // 3. Запускаем первый мир и его заставку
+        onWorldChange(0);
 
-            // Защитный таймаут: запускаем максимум через 3 секунды в любом случае
-            setTimeout(startJourneyWhenReady, 3000);
-        }
-    } else {
+        // 4. Включаем автоскролл
         engine.startInitialAutoScroll();
-    }
+    });
 
     // Кнопка "Посмотреть еще раз"
     restartBtn.addEventListener('click', () => {
         endOverlay.classList.add('hidden');
+        videoManager.unlockAndStart();
         engine.restartJourney();
         onWorldChange(0);
     });

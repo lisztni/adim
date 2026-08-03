@@ -78,7 +78,7 @@ html, body {
 
 .universe-section {
     position: relative;
-    width: 2000px; /* Уменьшено с 2700px до 2000px */
+    width: 3200px; /* Увеличено с 2000px до 3200px для комфортного зазора */
     height: 100vh;
     overflow: hidden;
     flex-shrink: 0;
@@ -509,4 +509,50 @@ html, body {
     border-color: var(--gold);
     color: var(--gold);
     transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   START JOURNEY OVERLAY (Кнопка СМОТРЕТЬ строго по центру)
+   ========================================================================== */
+
+.start-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 18px 45px;
+    border-radius: 50px;
+    background: var(--gold);
+    color: #000000;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    box-shadow: 0 0 35px var(--gold-glow);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: startBtnPulse 2.2s infinite ease-in-out;
+}
+
+.start-btn:hover {
+    background: #ffffff;
+    box-shadow: 0 0 50px var(--gold);
+    transform: scale(1.08);
+}
+
+.btn-icon {
+    font-size: 1.1rem;
+}
+
+/* Мягкая пульсация кнопки для привлечения внимания */
+@keyframes startBtnPulse {
+    0%, 100% { 
+        box-shadow: 0 0 25px var(--gold-glow); 
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 45px rgba(243, 206, 114, 0.85); 
+        transform: scale(1.03);
+    }
 }

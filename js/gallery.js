@@ -65,9 +65,9 @@ export function buildGallery(trackContainer, photoBuckets, modalManager) {
         const photosLayer = document.createElement('div');
         photosLayer.className = 'layer-photos';
 
-        // Сбалансированная ширина 2000px
-        const sectionWidth = 2000;
-        const padding = 150;
+        // Расширенная ширина 3200px для просторного зазора
+        const sectionWidth = 3200;
+        const padding = 200;
         const availableWidth = sectionWidth - padding * 2;
         const stepX = availableWidth / (universePhotos.length || 1);
 
@@ -77,7 +77,6 @@ export function buildGallery(trackContainer, photoBuckets, modalManager) {
 
             const posX = padding + pIdx * stepX + randomRange(-15, 15);
 
-            // Скорректированный центр высоты (~20% от верха), чтобы крупные фото влезали идеально
             const baseCenterY = 20;
             const posY = baseCenterY + randomRange(-8, 8);
 

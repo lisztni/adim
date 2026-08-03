@@ -1,18 +1,18 @@
 /**
- * Optimized Video & Audio Manager with Smart Background Preloading
+ * Optimized Video & Audio Manager with Explicit Start Button Unlocking
  */
 export class VideoManager {
     constructor() {
         this.isAudioEnabled = true;
+        this.hasUserInteracted = false;
         this.activeUniverseIndex = -1;
         this.videoElements = [];
-
-        this.initUserGestureUnlock();
     }
 
     registerVideos(videos) {
         this.videoElements = videos;
         this.videoElements.forEach(video => {
+            video.muted = true;
             video.pause();
             try {
                 video.currentTime = 0;
@@ -20,55 +20,35 @@ export class VideoManager {
         });
     }
 
-    initUserGestureUnlock() {
-        const unlock = () => {
-            if (this.videoElements.length > 0 && this.activeUniverseIndex >= 0) {
-                const currentVideo = this.videoElements[this.activeUniverseIndex];
-                if (currentVideo) {
-                    currentVideo.play().then(() => {
-                        this.updateAudioStates();
-                    }).catch(() => {
-                        this.updateAudioStates();
-                    });
-                }
-            }
-        };
-
-        window.addEventListener('pointerdown', unlock, { once: true });
-        window.addEventListener('click', unlock, { once: true });
-        window.addEventListener('wheel', unlock, { once: true });
-        window.addEventListener('keydown', unlock, { once: true });
+    /**
+     * Вызывается при нажатии на кнопку "НАЧАТЬ ПУТЕШЕСТВИЕ"
+     */
+    unlockAndStart() {
+        this.hasUserInteracted = true;
+        this.updateAudioStates();
     }
 
-    /**
-     * Вызывается при переходе в мир
-     */
     setActiveUniverse(activeIndex) {
         if (this.activeUniverseIndex === activeIndex) return;
         this.activeUniverseIndex = activeIndex;
 
         this.videoElements.forEach((video, idx) => {
             if (idx === activeIndex) {
-                // 1. Активное видео — запускаем с 0:00
-                video.preload = 'auto';
                 try {
                     video.currentTime = 0;
                 } catch (e) {}
 
+                video.muted = !this.hasUserInteracted;
+
                 video.play().then(() => {
                     this.updateAudioStates();
                 }).catch(() => {
+                    video.muted = true;
+                    video.play().catch(() => {});
                     this.updateAudioStates();
                 });
 
-            } else if (idx === activeIndex + 1) {
-                // 2. УМНАЯ ПРЕДЗАГРУЗКА: Готовим видео СЛЕДУЮЩЕГО мира в фоне без лагов!
-                video.preload = 'auto';
-                if (!video.paused) video.pause();
-
             } else {
-                // 3. Далекие миры — ставим на паузу и не расходуем сеть/память
-                video.preload = 'none';
                 if (!video.paused) {
                     video.pause();
                 }
@@ -97,8 +77,13 @@ export class VideoManager {
             const targetMaxVolume = parseFloat(video.dataset.volume || '0.32');
 
             if (idx === this.activeUniverseIndex) {
-                video.muted = false;
-                this.fadeVideoVolume(video, targetMaxVolume);
+                if (this.hasUserInteracted && this.isAudioEnabled) {
+                    video.muted = false;
+                    this.fadeVideoVolume(video, targetMaxVolume);
+                } else {
+                    video.muted = true;
+                    video.volume = 0;
+                }
             } else {
                 this.fadeVideoVolume(video, 0, () => {
                     video.muted = true;
