@@ -1,39 +1,1736 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Happy Birthday ❤️</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>С днём рождения, Адина</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CONFIG-DRIVEN CONTENT LIVES IN THE <script> AT THE BOTTOM.
+   Edit episode names, room memories, and the video source there.
+   ============================================================ */
 
-    <link rel="stylesheet" href="style.css">
+:root{
+  --bg:#141414;
+  --bg-1:#1c1c1c;
+  --bg-2:#232323;
+  --card:#1f1f1f;
+  --white:#f6f6f4;
+  --dim:#9a9a97;
+  --dimmer:#6b6b68;
+  --red:#E50914;
+  --red-dark:#a30710;
+  --gold:#e8c27a;
+  --radius-lg:18px;
+  --radius-md:12px;
+  --radius-sm:8px;
+  --display:'Bebas Neue', 'Manrope', sans-serif;
+  --body:'Manrope', -apple-system, sans-serif;
+  --mono:'JetBrains Mono', monospace;
+  --ease: cubic-bezier(.22,.9,.32,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:var(--body);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{display:block;max-width:100%;}
+button{font-family:inherit;border:none;cursor:pointer;background:none;color:inherit;}
+a{color:inherit;text-decoration:none;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+}
+
+/* ---------- Reveal-on-scroll ---------- */
+.reveal{opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
+.reveal.in{opacity:1; transform:translateY(0);}
+
+/* ---------- Top Nav ---------- */
+.topnav{
+  position:fixed; top:0; left:0; right:0; z-index:60;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:calc(14px + env(safe-area-inset-top,0px)) calc(18px + env(safe-area-inset-right,0px)) 14px calc(18px + env(safe-area-inset-left,0px));
+  transition:background .4s var(--ease), backdrop-filter .4s var(--ease), box-shadow .4s var(--ease);
+}
+.topnav.scrolled{
+  background:rgba(20,20,20,.72);
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  box-shadow:0 4px 24px rgba(0,0,0,.4);
+}
+.brand{
+  font-family:var(--display);
+  font-size:22px;
+  letter-spacing:1.5px;
+  color:var(--red);
+  display:flex; align-items:center; gap:6px;
+}
+.brand .logo {
+  width:auto;
+  height:42px;
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;
+  min-height:88vh;
+  min-height:88svh;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:calc(100px + env(safe-area-inset-top,0px)) calc(18px + env(safe-area-inset-right,0px)) 34px calc(18px + env(safe-area-inset-left,0px));
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute; inset:0; z-index:0;
+  overflow:hidden;
+  background:#141414;
+}
+.hero-bg video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+  filter:contrast(1.02) saturate(1.05);
+  will-change:transform;
+  pointer-events:none;
+}
+/* vignette: fades the photo's hard edges into the page background on all sides */
+.hero-bg::before{
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(85% 90% at 50% 42%, transparent 45%, rgba(20,20,20,.55) 82%, var(--bg) 100%),
+    linear-gradient(90deg, var(--bg) 0%, transparent 12%, transparent 88%, var(--bg) 100%);
+}
+.hero-bg::after{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(20,20,20,0) 0%, rgba(20,20,20,.3) 42%, rgba(20,20,20,.94) 90%, var(--bg) 100%);
+}
+.hero-bg .grain{
+  position:absolute; inset:0; opacity:.05; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.hero-content{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:780px;
+}
+@media (max-width:600px){
+  .hero{
+    justify-content:flex-start;
+    min-height:78svh;
+    padding-top:calc(40px + env(safe-area-inset-top,0px));
+  }
+  .hero-bg video{object-position:center center;}
+  .hero-content{
+    position:relative;
+    z-index:1;
+    margin-top:16vh;
+    padding-bottom:4.5vh;
+  }
+}
+@media (min-width:900px){
+  .hero{
+    min-height:92vh;
+  }
+  .hero-content{
+    padding-bottom:12vh;
+  }
+}
+.hero-title{
+  font-family:var(--display);
+  font-size:clamp(38px, 10vw, 64px);
+  line-height:1.02;
+  letter-spacing:.5px;
+  color:var(--white);
+  text-shadow:0 6px 30px rgba(0,0,0,.5);
+  max-width:720px;
+}
+.hero-sub{
+  margin-top:14px;
+  font-size:15px;
+  line-height:1.55;
+  color:#d8d8d5;
+  max-width:480px;
+}
+.hero-meta{
+  display:flex; flex-wrap:wrap; gap:9px;
+  margin-top:18px;
+}
+.chip{
+  font-family:var(--mono);
+  font-size:11px; letter-spacing:.5px;
+  padding:5px 11px;
+  border-radius:100px;
+  border:1px solid rgba(255,255,255,.16);
+  color:#cfcfcc;
+  background:rgba(255,255,255,.03);
+}
+.chip.age{border-color:rgba(229,9,20,.5); color:#ff8b8f;}
+.hero-actions{
+  display:flex; gap:12px;
+  margin-top:26px;
+  flex-wrap:wrap;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:13px 24px;
+  border-radius:var(--radius-sm);
+  font-weight:700; font-size:15px;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+}
+.btn:active{transform:scale(.96);}
+.btn-primary{
+  background:var(--red); color:#fff;
+  box-shadow:0 8px 24px rgba(229,9,20,.35);
+}
+.btn-primary:hover{background:#ff0a17; box-shadow:0 10px 30px rgba(229,9,20,.5);}
+.btn-ghost{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(8px);
+  color:#fff;
+}
+.btn-ghost:hover{background:rgba(255,255,255,.14);}
+
+/* ---------- Rows ---------- */
+.rows{padding:6px 0 60px;}
+.row-section{margin-top:38px;}
+.row-head{
+  display:flex; align-items:baseline; justify-content:space-between;
+  padding:0 18px; margin-bottom:14px;
+}
+.row-title{
+  font-family:var(--display);
+  font-size:22px; letter-spacing:.4px;
+}
+.row-description{
+  max-width:760px;
+  margin:50px auto 16px;
+  font-size:15px;
+  line-height:1.7;
+  color:#d8d8d5;
+  letter-spacing:.02em;
+}
+.row-description p{margin:0;}
+.row-sub{
+  font-family:var(--mono); font-size:10.5px; color:var(--dimmer);
+  letter-spacing:.5px;
+}
+.row-scroll{
+  display:flex; gap:12px;
+  overflow-x:auto; scroll-snap-type:x proximity;
+  padding:4px 18px 14px;
+  scrollbar-width:none;
+}
+.row-scroll::-webkit-scrollbar{display:none;}
+
+.ep-card{
+  position:relative;
+  flex:0 0 auto;
+  width:158px; height:222px;
+  border-radius:var(--radius-md);
+  overflow:hidden;
+  scroll-snap-align:start;
+  background:linear-gradient(150deg,var(--card),#141414);
+  border:1px solid rgba(255,255,255,.06);
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.ep-card:active{transform:scale(.95);}
+.ep-card .thumb{
+  position:absolute; inset:0;
+  overflow:hidden;
+  background:
+    radial-gradient(90% 70% at 30% 20%, rgba(229,9,20,.4), transparent 60%),
+    linear-gradient(160deg, var(--thumb-a,#3a1a1c), var(--thumb-b,#151515));
+}
+.ep-card .thumb::after{
+  content:'';
+  position:absolute; inset:0; z-index:1;
+  background:linear-gradient(0deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,.1) 55%, rgba(0,0,0,0) 70%);
+}
+.ep-card .thumb .thumb-preview{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  display:block;
+  object-fit:cover; object-position:center;
+  opacity:0; transition:opacity .25s var(--ease);
+  pointer-events:none; z-index:0; background:#000;
+}
+.ep-card .thumb .thumb-preview.active{
+  opacity:1;
+}
+.ep-card .n{
+  position:absolute; top:9px; left:10px;
+  font-family:var(--mono); font-size:11px; color:var(--gold);
+  letter-spacing:.5px; z-index:2;
+}
+.ep-card .play{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:38px; height:38px; border-radius:50%;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.4);
+  backdrop-filter:blur(6px);
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; z-index:2;
+  opacity:.9;
+}
+.ep-card .info{
+  position:absolute; left:10px; right:10px; bottom:10px; z-index:2;
+}
+.ep-card .title{font-size:12.5px; font-weight:700; line-height:1.3;}
+.ep-card .who{font-size:10.5px; color:var(--dim); margin-top:2px;}
+.ep-card .check{
+  position:absolute; top:9px; right:10px; z-index:2;
+  width:20px; height:20px; border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.4);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; color:transparent;
+  transition:all .3s var(--ease);
+}
+.ep-card.watched .check{
+  background:var(--red); border-color:var(--red); color:#fff;
+}
+.ep-card.watched .thumb::before{
+  content:''; position:absolute; inset:0; background:rgba(0,0,0,.3);
+}
+
+.cw-card{
+  flex:0 0 auto; width:200px; scroll-snap-align:start;
+}
+.cw-thumb{
+  height:110px; border-radius:var(--radius-md);
+  background:linear-gradient(140deg, var(--thumb-a,#241922), var(--thumb-b,#141414));
+  position:relative; overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+  transition:transform .3s var(--ease);
+}
+.cw-card:active .cw-thumb{transform:scale(.96);}
+.cw-thumb .glow{
+  position:absolute; inset:0;
+  background:radial-gradient(70% 60% at 70% 30%, rgba(232,194,122,.25), transparent 60%);
+}
+.progress{
+  height:3px; background:rgba(255,255,255,.15); border-radius:3px; margin-top:8px; overflow:hidden;
+}
+.progress i{display:block; height:100%; background:var(--red); border-radius:3px;}
+.cw-title{font-size:12.5px; font-weight:600; margin-top:8px;}
+
+.ml-card{
+  flex:0 0 auto; width:120px; scroll-snap-align:start;
+  text-align:center;
+}
+.ml-thumb{
+  width:120px; height:150px; border-radius:var(--radius-md);
+  background:linear-gradient(160deg, var(--thumb-a,#1d2420), var(--thumb-b,#141414));
+  border:1px solid rgba(255,255,255,.07);
+  display:flex; align-items:center; justify-content:center;
+  font-size:30px;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.ml-card:active .ml-thumb{transform:scale(.94);}
+.ml-label{font-size:11.5px; color:var(--dim); margin-top:8px;}
+
+/* ---------- Secret continue button ---------- */
+.secret-wrap{
+  display:flex; justify-content:center;
+  padding:10px 18px calc(70px + env(safe-area-inset-bottom,0px));
+}
+.secret-btn{
+  font-family:var(--mono); font-size:11px; letter-spacing:.5px;
+  color:var(--dimmer);
+  padding:10px 18px;
+  border:1px dashed rgba(255,255,255,.14);
+  border-radius:100px;
+  opacity:.55;
+  transition:opacity .3s, color .3s, border-color .3s;
+}
+.secret-btn.ready{
+  opacity:1; color:var(--gold); border-color:rgba(232,194,122,.5);
+  animation:pulseGlow 2.2s ease-in-out infinite;
+}
+@keyframes pulseGlow{
+  0%,100%{box-shadow:0 0 0 0 rgba(232,194,122,.25);}
+  50%{box-shadow:0 0 0 8px rgba(232,194,122,0);}
+}
+
+#intro-overlay{
+    position:fixed;
+    inset:0;
+    background:#101018;
+    z-index:9999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    text-align:center;
+    color:#fff;
+}
+
+#intro-overlay > *{
+    z-index:2;
+}
+
+.intro-video-wrap{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:100%;
+    height:100%;
+    transform:translate(-50%, -50%);
+    pointer-events:none;
+    overflow:hidden;
+}
+#intro-video{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    opacity:0;
+    transition:opacity .7s ease;
+    pointer-events:none;
+    display:block;
+}
+
+@media (max-width: 768px) {
+  .intro-video-wrap{
+    width:100vh;
+    height:100vw;
+    transform:translate(-50%, -50%) rotate(90deg);
+    transform-origin:center center;
+  }
+  #intro-video{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+  }
+}
+
+#ready-question{
+    opacity:0;
+    transform:scale(.9);
+    transition:.7s;
+}
+
+#fire-final{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    opacity:1;
+    transition:.5s;
+}
+
+#fire-final.hidden{
+    display:none;
+}
+
+#fire-final img{
+    max-width:220px;
+    width:30%;
+    height:auto;
+}
+
+#fire-number{
+    font-size:64px;
+    color:white;
+    opacity:0;
+    transform:scale(.5);
+    transition:.5s;
+}
+
+#play-prompt{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  z-index:2;
+  width:100%;
+  padding:0 24px;
+}
+
+#play-prompt button{
+  width:92px;
+  height:92px;
+  border-radius:50%;
+  border:1px solid rgba(232,194,122,.4);
+  background:rgba(232,194,122,.13);
+  color:#fff;
+  font-size:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#play-prompt p{
+  color:#ddd;
+  font-size:16px;
+  max-width:380px;
+  line-height:1.5;
+}
+
+#skip-intro{
+  position:absolute;
+  top:24px;
+  right:24px;
+  z-index:2;
+  color:#fff;
+  background:rgba(255,255,255,.08);
+  padding:12px 18px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  font-size:14px;
+}
+
+#ready-question{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    color:#fff;
+    width:100%;
+    padding:0 24px;
+    opacity:1;
+    transform:scale(1);
+    transition:opacity .3s ease, transform .3s ease;
+}
+
+#ready-question.hidden{
+    display:none;
+    opacity:0;
+    transform:scale(.9);
+}
+
+#fire-final.hidden,
+#play-prompt.hidden{
+    display:none;
+}
+
+#ready-question h2{
+    font-size:42px;
+    line-height:1.05;
+    margin:0;
+}
+
+.ready-actions{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.start-btn{
+    padding:14px 24px;
+    min-width:110px;
+    border-radius:999px;
+    border:1px solid rgba(232,194,122,.35);
+    background:rgba(232,194,122,.14);
+    color:#fff;
+    font-size:15px;
+}
+
+#fire-final{
+    justify-content:center;
+    gap:18px;
+    color:#fff;
+    padding:0 20px;
+}
+
+#fire-final img{
+    max-width:260px;
+    width:35%;
+}
+
+#fire-number{
+    font-size:88px;
+    letter-spacing:.02em;
+}
+
+.hidden{
+    display:none;
+}
+
+/* ============================================================
+   OVERLAY SEQUENCE
+   ============================================================ */
+.overlay{
+  position:fixed; inset:0; z-index:200;
+  display:none; align-items:center; justify-content:center;
+  background:#0c0c0c;
+  overflow:hidden;
+}
+.overlay.active{display:flex;}
+
+.doodle-overlay{
+  position:fixed; inset:0; z-index:210;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(8,8,8,.55);
+}
+.doodle-message{
+  max-width:88%;
+  padding:20px 24px;
+  background:rgba(18,18,18,.96);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:28px;
+  text-align:center;
+  font-size:clamp(20px,4vw,32px);
+  line-height:1.15;
+  color:#fff;
+  box-shadow:0 26px 70px rgba(0,0,0,.35);
+}
+
+/* ---- Curtains ---- */
+#curtainScene{background:#0c0c0c;}
+.curtain{
+  position:absolute; top:0; bottom:0; width:52%;
+  background:
+    repeating-linear-gradient(90deg,
+      #7c0209 0px, #9c0812 22px, #7c0209 44px, #5c0108 66px);
+  box-shadow:inset 0 0 90px rgba(0,0,0,.6);
+}
+.curtain.left{left:0; transform:translateX(-100%); border-radius:0 6px 6px 0;}
+.curtain.right{right:0; transform:translateX(100%); border-radius:6px 0 0 6px;}
+.curtain::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(255,214,170,.18), transparent 30%);
+}
+.curtain.closed.left{transform:translateX(0);}
+.curtain.closed.right{transform:translateX(0);}
+#curtainScene.animate .curtain{transition:transform 1.1s var(--ease);}
+.curtain-tassel{
+  position:absolute; bottom:6%; width:100%; height:26px;
+  background:linear-gradient(90deg, transparent, rgba(232,194,122,.5), transparent);
+}
+
+/* ---- Video scene ---- */
+#videoScene{background:#000;}
+.video-wrap{position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center;}
+#personalVideo{width:100%; height:100%; object-fit:cover;}
+.video-fallback{
+  text-align:center; padding:0 30px;
+  font-family:var(--display); font-size:26px; color:var(--white); letter-spacing:.5px;
+}
+.video-fallback p{
+  font-family:var(--body); font-size:13.5px; color:var(--dim); margin-top:12px; line-height:1.6;
+}
+.video-fallback .btn{margin-top:22px;}
+
+/* ---- Episode player (adaptive: portrait or landscape source) ---- */
+.ep-player{
+  position:fixed; inset:0; z-index:250;
+  display:none; align-items:center; justify-content:center;
+  background:rgba(6,6,6,.92);
+  backdrop-filter:blur(14px);
+  padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0);
+}
+.ep-player.active{display:flex;}
+.ep-player-stage{
+  position:relative;
+  width:100%; height:100%;
+  max-width:1180px;
+  max-height:92vh;
+  display:flex; align-items:center; justify-content:center;
+}
+#epPlayerVideo{
+  display:none;
+  max-width:100%; max-height:100%;
+  width:auto; height:auto;
+  background:#000;
+  border-radius:18px;
+  box-shadow:0 28px 80px rgba(0,0,0,.55);
+}
+/* Landscape source: fill width edge-to-edge on mobile */
+.ep-player-stage.landscape #epPlayerVideo{width:100%; height:auto;}
+/* Portrait source: fill height, letterboxed sides */
+.ep-player-stage.portrait #epPlayerVideo{height:100%; width:auto;}
+.ep-player-stage.has-video #epPlayerVideo{display:block;}
+.ep-player-empty{
+  text-align:center; padding:0 30px; color:var(--dim);
+  font-size:14px; line-height:1.7;
+}
+.ep-player.force-landscape{
+  inset:50% auto auto 50%;
+  width:100vh;
+  height:100vw;
+  transform:translate(-50%,-50%) rotate(90deg);
+  transform-origin:center center;
+  padding:0;
+}
+.ep-player.force-landscape .ep-player-stage{
+  width:100%; height:100%;
+  max-width:none; max-height:none;
+}
+.ep-player.force-landscape #epPlayerVideo{
+  width:100%; height:100%;
+  max-width:none; max-height:none;
+  object-fit:contain;
+  border-radius:0;
+}
+.ep-player-empty div{font-size:40px; margin-bottom:14px;}
+.ep-player-empty code{color:var(--gold); font-family:var(--mono); font-size:12px;}
+.ep-player-stage.has-video .ep-player-empty{display:none;}
+.ep-player-close{
+  position:absolute; top:calc(16px + env(safe-area-inset-top,0)); right:calc(16px + env(safe-area-inset-right,0));
+  z-index:2;
+  width:38px; height:38px; border-radius:50%;
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.18);
+  color:#fff; font-size:16px;
+  display:flex; align-items:center; justify-content:center;
+}
+.ep-player-ui{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column;
+  justify-content:space-between;
+  pointer-events:none;
+  opacity:1;
+  transition:opacity .25s ease, transform .25s ease;
+}
+.ep-player-ui.hidden{opacity:0; pointer-events:none;}
+.ep-player-header{
+  display:flex; justify-content:center; align-items:flex-start;
+  padding:22px 20px 0;
+  pointer-events:auto;
+}
+.ep-player-headline{
+  font-family:var(--display); font-size:18px; letter-spacing:.5px;
+  color:#fff; margin-bottom:4px;
+}
+.ep-player-subtitle{
+  font-family:var(--mono); font-size:12px; color:var(--dimmer);
+}
+.ep-player-central-controls{
+  display:flex; align-items:center; justify-content:center; gap:16px;
+  pointer-events:auto;
+}
+.ep-player-btn{
+  width:58px; height:58px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(0,0,0,.36);
+  color:#fff;
+  font-size:22px;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .25s ease, background .25s ease, border-color .25s ease;
+}
+.ep-player-btn:hover{transform:scale(1.03); background:rgba(255,255,255,.08);}
+.ep-player-btn:disabled{
+  opacity:.42;
+  cursor:not-allowed;
+  transform:none;
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.12);
+}
+.ep-player-btn:disabled:hover{transform:none; background:rgba(255,255,255,.06);}
+.ep-player-play{width:72px; height:72px; font-size:28px;}
+.ep-player-progress-wrap{
+  display:flex; flex-direction:column; gap:10px;
+  width:calc(100% - 40px);
+  max-width:860px;
+  margin:0 auto 18px;
+  pointer-events:auto;
+  /* larger vertical hit area for easier scrubbing */
+  padding:14px 0 6px;
+  margin-bottom:8px;
+  touch-action:none;
+}
+.ep-player-progress-line{
+  position:relative;
+  height:10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.12);
+  /* expand hit target without changing visual thickness */
+  cursor:pointer;
+  touch-action:none;
+}
+.ep-player-progress-line::before{
+  content:'';
+  position:absolute;
+  left:0; right:0;
+  top:-16px; bottom:-16px;
+}
+.ep-player-progress-filled{
+  position:absolute; inset:0 0 0 0;
+  width:0%; height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg, rgba(229,9,20,.9), rgba(232,194,122,.95));
+  pointer-events:none;
+}
+.ep-player-progress-handle{
+  position:absolute; top:50%; left:0;
+  transform:translate(-50%,-50%);
+  width:18px; height:18px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 12px 24px rgba(0,0,0,.28);
+  pointer-events:none;
+  will-change:left;
+}
+.ep-player-time{
+  display:flex; justify-content:space-between;
+  font-family:var(--mono); font-size:12px; color:var(--dimmer);
+}
+/* volume controls removed */
+.ep-player-endcard{
+  position:absolute;
+  inset:auto 20px 22px 20px;
+  padding:18px 20px;
+  border-radius:20px;
+  background:rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(20px);
+  display:none;
+  flex-direction:column;
+  gap:14px;
+  align-items:center;
+  pointer-events:auto;
+}
+.ep-player-endcard.active{display:flex;}
+.ep-player-endcard-copy{
+  font-family:var(--display); font-size:16px; color:#fff; text-align:center;
+}
+.ep-player-endcard .btn{
+  width:100%; justify-content:center;
+}
+@media (max-width:720px){
+  .ep-player-stage{padding:0;}
+  .ep-player-progress-wrap,
+  .ep-player-volume-wrap{width:calc(100% - 28px);}
+  .ep-player-headline{font-size:16px;}
+  .ep-player-btn{width:52px; height:52px;}
+  .ep-player-play{width:62px; height:62px; font-size:24px;}
+}
+@media (min-width:900px){
+  .ep-player-stage{padding:40px;}
+}
+
+/* ---- Room scene: full-bleed interactive shelf (iframe) ---- */
+#roomScene{
+  align-items:stretch; justify-content:stretch;
+  background:#090909;
+  overflow:hidden;
+}
+.room-shelf-frame{
+  position:relative;
+  width:100%; height:100%;
+  display:flex;
+}
+.room-shelf-header{
+  position:absolute; top:0; left:0; right:0; z-index:2;
+  padding:calc(18px + env(safe-area-inset-top, 0px)) 18px 26px;
+  text-align:center;
+  background:linear-gradient(180deg, rgba(9,9,9,.9) 0%, rgba(9,9,9,.55) 55%, transparent 100%);
+  pointer-events:none;
+}
+.room-back-btn{
+  position:absolute;
+  top:calc(18px + env(safe-area-inset-top, 0px));
+  left:18px;
+  z-index:3;
+  padding:12px 16px;
+  border-radius:999px;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);
+  color:#fff;
+  font-size:14px;
+  backdrop-filter:blur(12px);
+  cursor:pointer;
+  transition:transform .2s ease, background .2s ease, border-color .2s ease;
+  pointer-events:auto;
+}
+.room-back-btn:hover{
+  transform:scale(1.03);
+  background:rgba(255,255,255,.16);
+  border-color:rgba(255,255,255,.28);
+}
+.room-back-btn:active{
+  transform:scale(.97);
+}
+.room-title{
+  font-family:var(--display); font-size:26px; text-align:center;
+  color:var(--gold); letter-spacing:.5px;
+}
+.room-sub{
+  text-align:center; font-size:12.5px; color:var(--dim);
+  margin-top:6px; max-width:320px; margin-left:auto; margin-right:auto;
+  line-height:1.6;
+}
+.shelf-frame{
+  flex:1 1 auto;
+  width:100%; height:100%;
+  border:0; display:block;
+  background:#090909;
+}
+
+
+/* ---------- Larger screens ---------- */
+@media (min-width:560px){
+  .hero{padding-left:40px; padding-right:40px;}
+  .row-head, .row-scroll{padding-left:40px; padding-right:40px;}
+}
+@media (min-width:900px){
+  .hero{min-height:78vh; padding:120px 60px 50px;}
+  .hero-title{font-size:70px;}
+  .row-head, .row-scroll{padding-left:60px; padding-right:60px;}
+  .ep-card{width:190px; height:260px;}
+  .cw-card{width:240px;}
+
+}
+
+/* ---------- Scroll-down double arrow ---------- */
+.scroll-arrow{
+  position:absolute;
+  bottom:22px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  z-index:2;
+  pointer-events:none;
+  animation:scrollBounce 2.2s ease-in-out infinite;
+}
+.scroll-arrow span{
+  display:block;
+  width:0;
+  height:0;
+  border-left:9px solid transparent;
+  border-right:9px solid transparent;
+  border-top:11px solid rgba(255,255,255,.55);
+}
+.scroll-arrow span:nth-child(2){
+  border-top-color:rgba(255,255,255,.3);
+  margin-top:-4px;
+}
+@keyframes scrollBounce{
+  0%,20%,50%,80%,100%{transform:translateX(-50%) translateY(0);}
+  40%{transform:translateX(-50%) translateY(12px);}
+  60%{transform:translateX(-50%) translateY(6px);}
+}
+@media (max-width:600px){
+  .scroll-arrow{bottom:14px;}
+  .scroll-arrow span{border-left-width:7px;border-right-width:7px;border-top-width:9px;}
+}
+
+</style>
+<base target="_blank">
 </head>
 <body>
-    <div id="background"></div>
-    <!-- Вьюпорт камеры -->
-    <div id="viewport">
 
-        <!-- Мир -->
-        <div id="world">
-            <div id="birthday-title">
-                HAPPY BIRTHDAY, ADINA! 17
-            </div>
+<div id="intro-overlay">
+  <div id="play-prompt">
+    <button id="start-video-btn" type="button">▶</button>
+    <p>Нажми, чтобы начать трейлер</p>
+  </div>
 
-            <!-- Ваша объединённая картинка -->
-            <div id="scene"></div>
+  <div class="intro-video-wrap">
+    <video id="intro-video" playsinline preload="metadata">
+      <source src="https://aspazmaster.com/uploads/adimi/videos/trailer.mp4" type="video/mp4">
+      Твой браузер не поддерживает видео.
+    </video>
+  </div>
 
-            <!-- Сюда позже будем добавлять интерактивные предметы -->
+  <button id="skip-intro" type="button">Скипнуть</button>
 
-            <!--
-            <div class="item cassette"></div>
-            <div class="item note"></div>
-            <div class="item flower"></div>
-            -->
-
-        </div>
-
+  <div id="ready-question" class="hidden">
+    <h2>Готова?</h2>
+    <div class="ready-actions">
+      <button class="start-btn" type="button">Да</button>
+      <button class="start-btn" type="button">Yes</button>
     </div>
+  </div>
 
-    <script src="script.js"></script>
+  <div id="fire-final" class="hidden">
+    <img src="https://aspazmaster.com/uploads/adimi/videos/fire.gif" alt="fire">
+    <span id="fire-number">17</span>
+  </div>
+</div>
 
+<nav class="topnav" id="topnav">
+  <div class="brand">
+    <img class="logo" src="HEKUARTS.png" alt="author Erasyl"></div>
+</nav>
+
+<header class="hero">
+  <div class="hero-bg">
+    <video id="heroBgVideo" muted loop playsinline preload="metadata" src="https://aspazmaster.com/uploads/adimi/videos/intro_hero.mp4"></video>
+    <div class="grain"></div>
+  </div>
+  <div class="hero-content">
+    <h1 class="hero-title">С днём рождения,<br>Адина</h1>
+    <p class="hero-sub">Всё начинается как обычный сериал. Главное — досмотри до конца.</p>
+    <div class="hero-meta">
+      <span class="chip">2026</span>
+      <span class="chip">Birthday Special</span>
+      <span class="chip age">17+</span>
+      <span class="chip">Романтика</span>
+      <span class="chip">Комедия</span>
+      <span class="chip">Воспоминания</span>
+    </div>
+    <div class="hero-actions">
+      <button class="btn btn-primary" id="watchBtn"><span>▶</span> Смотреть</button>
+      <button class="btn btn-ghost" id="infoBtn">Открыть интерактив</button>
+    </div>
+  </div>
+
+    <div class="scroll-arrow" aria-hidden="true"><span></span><span></span></div>
+</header>
+
+<main class="rows">
+  <section class="row-section reveal">
+    <div class="row-description" style="padding: 0 10px; text-align:justify;">
+      <img src="adina_logo.png" alt="Адина" style="width:100%; max-width:300px; display:block; margin:0 auto 18px;">
+      Всё начинается как обычный сериал. Но чем дальше ты его смотришь, тем больше понимаешь, что он существует всего в одном экземпляре и был сделан специально для тебя. Здесь собраны поздравления, воспоминания и небольшие сюрпризы, которые мне хотелось оставить на память и подарить тебе в этот день.
+      Надеюсь, этот небольшой проект сможет хоть немного поднять тебе настроение и подарить улыбку. Приятного просмотра! ❤️
+    </div>
+    <div class="row-head">
+      <span class="row-title">Поздравления</span>
+    </div>
+    <div class="row-scroll" id="episodeRow"></div>
+  </section>
+
+  <div class="secret-wrap">
+    <button class="secret-btn" id="secretBtn">✦ продолжить историю</button>
+  </div>
+</main>
+
+<!-- ============ CURTAIN SCENE ============ -->
+<div class="overlay" id="curtainScene">
+  <div class="curtain left"><div class="curtain-tassel"></div></div>
+  <div class="curtain right"><div class="curtain-tassel"></div></div>
+</div>
+
+<!-- ============ VIDEO SCENE ============ -->
+<div class="overlay" id="videoScene">
+  <div class="video-wrap" id="videoWrap">
+    <div class="video-fallback" id="videoFallback">
+      Персональное видео<br>для Адины
+      <p>Замени VIDEO_SRC в коде на своё видео — и здесь будет проигрываться настоящее сообщение.<br>А пока — нажми, чтобы продолжить.</p>
+      <button class="btn btn-primary" id="videoContinueBtn">Продолжить ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EPISODE PLAYER — адаптивный (портрет/альбом) ============ -->
+<div class="ep-player" id="epPlayer">
+  <div class="ep-player-stage" id="epPlayerStage">
+    <video id="epPlayerVideo" playsinline></video>
+    <div class="ep-player-empty" id="epPlayerEmpty">
+      <div>🎬</div>
+      <p>Для этого эпизода ещё не добавлено видео.<br>Укажи ссылку в поле <code>src</code> нужного эпизода в CONFIG.episodes.</p>
+    </div>
+    <div class="ep-player-ui" id="epPlayerUI">
+      <div class="ep-player-header">
+        <div>
+          <div class="ep-player-headline" id="epPlayerTitle">Поздравление</div>
+          <div class="ep-player-subtitle" id="epPlayerWho">от автора</div>
+        </div>
+      </div>
+      <div class="ep-player-central-controls">
+        <button class="ep-player-btn ep-player-prev" id="epPrevBtn" aria-label="Предыдущий эпизод">⏮</button>
+        <button class="ep-player-btn ep-player-play" id="epPlayPauseBtn" aria-label="Воспроизвести">▶</button>
+        <button class="ep-player-btn ep-player-next" id="epNextBtn" aria-label="Следующий эпизод">⏭</button>
+      </div>
+      <div class="ep-player-progress-wrap" id="epProgressWrap">
+        <div class="ep-player-progress-line" id="epProgressLine">
+          <div class="ep-player-progress-filled" id="epProgressFilled"></div>
+          <div class="ep-player-progress-handle" id="epProgressHandle"></div>
+        </div>
+        <div class="ep-player-time">
+          <span id="epCurrentTime">0:00</span>
+          <span id="epDuration">0:00</span>
+        </div>
+      </div>
+      <!-- volume controls removed (handled via device/system) -->
+    </div>
+    <div class="ep-player-endcard" id="epPlayerEndcard" aria-hidden="true">
+      <div class="ep-player-endcard-copy" id="epEndCopy"></div>
+      <button class="btn btn-primary" id="epEndActionBtn">▶ Смотреть сейчас</button>
+      <button class="btn btn-ghost" id="epEndCloseBtn">Закрыть плеер</button>
+    </div>
+  </div>
+  <button class="ep-player-close" id="epPlayerClose" aria-label="Закрыть">✕</button>
+</div>
+
+<!-- ============ ROOM SCENE — интерактивная 2D-полка ============ -->
+<div class="overlay" id="roomScene">
+  <div class="room-shelf-frame">
+    <button class="room-back-btn" id="roomBackBtn" type="button">← Назад</button>
+    <div class="room-shelf-header">
+      <div class="room-title">Комната воспоминаний</div>
+      <p class="room-sub">Двигай пальцем, приближай двумя пальцами и нажимай на предметы ✨</p>
+    </div>
+    <iframe class="shelf-frame" id="shelfFrame" src="slide.html" title="Полка воспоминаний" loading="lazy"></iframe>
+  </div>
+</div>
+
+<style>
+@keyframes tailWag{0%,100%{transform:rotate(0deg);}50%{transform:rotate(-14deg);}}
+.eye-blink{animation:blink .25s ease;}
+@keyframes blink{0%,100%{transform:scaleY(1);}50%{transform:scaleY(.1);}}
+.mouth-smile{d:path("M110,96 Q110,101 100,99 M110,96 Q110,101 120,99");}
+</style>
+
+<script>
+/* ============================================================
+   CONFIG — EDIT ME
+   Everything content-related lives here so the sequence above
+   stays generic. Replace image gradients with real photos by
+   swapping the CSS "thumb-a/thumb-b" custom props for
+   background-image, or by adding <img> tags into the cards.
+   ============================================================ */
+const CONFIG = {
+  // 1) Episodes shown in the top row. Watching all of them
+  //    (tap = "watch") unlocks the secret sequence.
+  //    src — ссылка на видео эпизода (mp4/webm, можно относительный путь).
+  //    Оставь '' — покажется заглушка, а плитка всё равно отметится просмотренной.
+  //    Плеер сам подстроится под пропорции видео (портрет/альбом).
+  episodes: [
+    { n:'E1', title:'Поздравление от Камилы',   who:'Kamila',    a:'#3a2a1c', b:'#1f1412', src:'https://aspazmaster.com/uploads/adimi/greetings/kamila_greeting.mp4' },
+    { n:'E2', title:'Поздравление от Сары',   who:'Sarah',    a:'#3a2a1c', b:'#1f1412', src:'https://aspazmaster.com/uploads/adimi/videos/trailer.mp4' },
+    { n:'E3', title:'Поздравление от Айгерим',  who:'Aigerim',  a:'#3a1a1c', b:'#1a1414', src:'https://aspazmaster.com/uploads/adimi/greetings/aigerim_greeting.mp4' },
+    { n:'E4', title:'Поздравление от Аян',     who:'Ayan',      a:'#1c2a3a', b:'#141a1f', src:'https://aspazmaster.com/uploads/adimi/greetings/ayan_greeting.mp4' },
+    { n:'E5', title:'Поздравление от Аяулым',  who:'Ayaulym',   a:'#2a1c3a', b:'#171420', src:'https://aspazmaster.com/uploads/adimi/greetings/ayaulym_greeting.mp4' },
+    { n:'E6', title:'Поздравление от Замиры',   who:'Zamira',    a:'#2a3a1c', b:'#141a12', src:'https://aspazmaster.com/uploads/adimi/greetings/zamira_greeting.mp4' },
+    { n:'E7', title:'Поздравление от Дильназ',   who:'Dilnaz',    a:'#1c3a2a', b:'#14201a', src:'https://aspazmaster.com/uploads/adimi/greetings/dilnaz_greeting.mp4' },
+  ],
+
+  // 2) Real video for the big reveal. Leave empty to keep the
+  //    friendly placeholder card instead.
+  videoSrc: '', // e.g. 'video/message.mp4'
+
+  petsNeeded: 10, // how many pet taps/rubs trigger the purring moment
+};
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function el(html){ const t=document.createElement('template'); t.innerHTML=html.trim(); return t.content.firstChild; }
+
+const episodeRow = document.getElementById('episodeRow');
+let watchedCount = 0;
+let baseVideosStarted = false;
+
+CONFIG.episodes.forEach((e,i)=>{
+  const card = el(`
+    <div class="ep-card reveal in" style="--thumb-a:${e.a};--thumb-b:${e.b}" data-i="${i}">
+      <div class="thumb">
+        <video class="thumb-preview" playsinline webkit-playsinline muted loop preload="auto" aria-hidden="true"></video>
+      </div>
+      <div class="n">${e.n}</div>
+      <div class="check">✓</div>
+      <div class="play">▶</div>
+      <div class="info">
+        <div class="title">${e.title}</div>
+        <div class="who">${e.who}</div>
+      </div>
+    </div>`);
+  attachEpisodePreview(e, card);
+  card.addEventListener('click', ()=>{
+    openEpisodePlayer(e, card);
+  });
+  episodeRow.appendChild(card);
+});
+
+function attachEpisodePreview(episode, card){
+  if(!episode?.src) return;
+  const thumb = card.querySelector('.thumb');
+  if(!thumb) return;
+
+  let preview = thumb.querySelector('.thumb-preview');
+  if(!preview){
+    preview = document.createElement('video');
+    preview.className = 'thumb-preview';
+    preview.playsInline = true;
+    preview.muted = true;
+    preview.loop = true;
+    preview.autoplay = false;
+    preview.preload = 'auto';
+    preview.setAttribute('playsinline', '');
+    preview.setAttribute('webkit-playsinline', '');
+    preview.setAttribute('muted', '');
+    preview.setAttribute('loop', '');
+    preview.setAttribute('aria-hidden', 'true');
+    thumb.appendChild(preview);
+  }
+
+  preview.src = episode.src;
+  preview.load();
+  preview.currentTime = 0;
+  preview.classList.add('active');
+  if(baseVideosStarted){
+    preview.play().catch(()=>{});
+  } else {
+    preview.pause();
+  }
+}
+
+function getPageVideos(){
+  const intro = document.getElementById('intro-video');
+  const ep = document.getElementById('epPlayerVideo');
+  const personal = document.getElementById('personalVideo');
+  return Array.from(document.querySelectorAll('video')).filter(v=> v !== intro && v !== ep && v !== personal);
+}
+
+function pauseBaseVideos(){
+  getPageVideos().forEach(v=>{
+    if(!v.paused) v.pause();
+  });
+}
+
+function resumeBaseVideos(){
+  baseVideosStarted = true;
+  const hero = document.getElementById('heroBgVideo');
+  if(hero){
+    hero.play().catch(()=>{});
+  }
+  document.querySelectorAll('.thumb-preview').forEach(v=>{
+    if(v.src){
+      v.play().catch(()=>{});
+    }
+  });
+}
+
+function markWatched(card){
+  if(card.classList.contains('watched')) return;
+  card.classList.add('watched');
+  watchedCount++;
+  updateEpCounter();
+}
+
+function updateEpCounter(){
+  const secretBtn = document.getElementById('secretBtn');
+  if(watchedCount >= CONFIG.episodes.length){
+    secretBtn.classList.add('ready');
+  }
+}
+
+const DOODLE_TEXTS = ['Спасибо за просмотр', 'С днём рождения', 'Секрет откроется через секунду'];
+let doodleTimeout = null;
+let doodleIndex = 0;
+function showDoodleSequence(){
+  const overlay = document.createElement('div');
+  overlay.className = 'doodle-overlay active';
+  overlay.innerHTML = `<div class="doodle-message" id="doodleMessage">${DOODLE_TEXTS[0]}</div>`;
+  document.body.appendChild(overlay);
+  doodleIndex = 0;
+  function nextMessage(){
+    doodleIndex += 1;
+    if(doodleIndex >= DOODLE_TEXTS.length){
+      hideDoodle();
+      runCurtains();
+      return;
+    }
+    const message = document.getElementById('doodleMessage');
+    if(message) message.textContent = DOODLE_TEXTS[doodleIndex];
+    doodleTimeout = setTimeout(nextMessage, 3000);
+  }
+  doodleTimeout = setTimeout(nextMessage, 3000);
+}
+
+function hideDoodle(){
+  if(doodleTimeout){
+    clearTimeout(doodleTimeout);
+    doodleTimeout = null;
+  }
+  const overlay = document.querySelector('.doodle-overlay');
+  if(overlay) overlay.remove();
+}
+
+/* ============================================================
+   SCROLL REVEAL + STICKY NAV
+   ============================================================ */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+}, {threshold:.15});
+document.querySelectorAll('.reveal').forEach(elm=>io.observe(elm));
+
+window.addEventListener('scroll', ()=>{
+  document.getElementById('topnav').classList.toggle('scrolled', window.scrollY > 20);
+}, {passive:true});
+
+/* ============================================================
+   HERO BUTTONS
+   ============================================================ */
+document.getElementById('watchBtn').addEventListener('click', ()=>{
+  document.getElementById('episodeRow').scrollIntoView({behavior:'smooth', block:'center'});
+});
+document.getElementById('infoBtn').addEventListener('click', ()=>{
+  document.body.style.overflow = 'hidden';
+  pauseBaseVideos();
+  showOverlay('roomScene');
+});
+document.getElementById('roomBackBtn').addEventListener('click', ()=>{
+  hideOverlay('roomScene');
+  document.body.style.overflow = '';
+  if(!epPlayer.classList.contains('active')){
+    resumeBaseVideos();
+  }
+});
+document.getElementById('secretBtn').addEventListener('click', startSequence);
+
+/* ============================================================
+   SEQUENCE ORCHESTRATION
+   ============================================================ */
+function showOverlay(id){ document.getElementById(id).classList.add('active'); }
+function hideOverlay(id){ document.getElementById(id).classList.remove('active'); }
+
+function startSequence(){
+  document.body.style.overflow = 'hidden';
+  pauseBaseVideos();
+  showDoodleSequence();
+}
+
+/* ---- Curtains ---- */
+function runCurtains(){
+  showOverlay('curtainScene');
+  const scene = document.getElementById('curtainScene');
+  const left = scene.querySelector('.curtain.left');
+  const right = scene.querySelector('.curtain.right');
+  requestAnimationFrame(()=>{
+    scene.classList.add('animate');
+    requestAnimationFrame(()=>{
+      left.classList.add('closed');
+      right.classList.add('closed');
+    });
+  });
+  setTimeout(()=>{
+    // fully closed — hold for a beat
+    setTimeout(()=>{
+      hideOverlay('curtainScene');
+      runRoom();
+      // reset for potential replay
+      setTimeout(()=>{
+        left.classList.remove('closed');
+        right.classList.remove('closed');
+        scene.classList.remove('animate');
+      }, 50);
+    }, 1000);
+  }, 1150);
+}
+
+/* ---- Video ---- */
+function runVideo(){
+  showOverlay('videoScene');
+  const wrap = document.getElementById('videoWrap');
+  if(CONFIG.videoSrc){
+    wrap.innerHTML = `<video id="personalVideo" autoplay playsinline></video>`;
+    const v = document.getElementById('personalVideo');
+    v.src = CONFIG.videoSrc;
+    v.addEventListener('ended', ()=>{ hideOverlay('videoScene'); runRoom(); });
+    v.play().catch(()=>{});
+  } else {
+    // placeholder already in DOM
+    document.getElementById('videoContinueBtn').onclick = ()=>{
+      hideOverlay('videoScene');
+      runRoom();
+    };
+  }
+}
+
+/* ---- Room ---- */
+function runRoom(){
+  pauseBaseVideos();
+  showOverlay('roomScene');
+  document.body.style.overflow = 'hidden';
+}
+
+/* ---- Adaptive episode player (портрет/альбом — под пропорции конкретного видео) ---- */
+const epPlayer = document.getElementById('epPlayer');
+const epPlayerStage = document.getElementById('epPlayerStage');
+const epPlayerVideo = document.getElementById('epPlayerVideo');
+const epPlayerUI = document.getElementById('epPlayerUI');
+const epPlayerTitle = document.getElementById('epPlayerTitle');
+const epPlayerWho = document.getElementById('epPlayerWho');
+const epPlayPauseBtn = document.getElementById('epPlayPauseBtn');
+const epPrevBtn = document.getElementById('epPrevBtn');
+const epNextBtn = document.getElementById('epNextBtn');
+const epProgressLine = document.getElementById('epProgressLine');
+const epProgressFilled = document.getElementById('epProgressFilled');
+const epProgressHandle = document.getElementById('epProgressHandle');
+const epCurrentTime = document.getElementById('epCurrentTime');
+const epDuration = document.getElementById('epDuration');
+const epPlayerEndcard = document.getElementById('epPlayerEndcard');
+const epEndCopy = document.getElementById('epEndCopy');
+const epEndActionBtn = document.getElementById('epEndActionBtn');
+const heroBgVideo = document.getElementById('heroBgVideo');
+
+let currentEpCard = null;
+let currentEpisode = null;
+let currentIndex = 0;
+let uiHideTimer = null;
+let endCountdown = null;
+let trackingProgress = false;
+
+function formatTime(time){
+  const minutes = Math.floor(time/60);
+  const seconds = Math.floor(time%60).toString().padStart(2,'0');
+  return `${minutes}:${seconds}`;
+}
+
+
+function updateProgress(){
+  if(!epPlayerVideo.duration || trackingProgress) return;
+  const progress = epPlayerVideo.currentTime / epPlayerVideo.duration;
+  epProgressFilled.style.width = `${progress*100}%`;
+  epProgressHandle.style.left = `${progress*100}%`;
+  epCurrentTime.textContent = formatTime(epPlayerVideo.currentTime);
+}
+
+function updateDuration(){
+  epDuration.textContent = epPlayerVideo.duration ? formatTime(epPlayerVideo.duration) : '0:00';
+}
+
+function setPlayState(){
+  epPlayPauseBtn.textContent = epPlayerVideo.paused ? '▶' : '❚❚';
+}
+
+function resetEndcard(){
+  clearInterval(endCountdown);
+  epPlayerEndcard.classList.remove('active');
+  epEndCopy.textContent = '';
+  epEndActionBtn.textContent = '▶ Смотреть сейчас';
+}
+
+function showEndcard(){
+  if(!currentEpisode) return;
+  const hasNext = currentIndex < CONFIG.episodes.length - 1;
+  const isLast = !hasNext;
+  let countdown = 5;
+  epEndCopy.textContent = hasNext ? `Следующее поздравление через ${countdown}` : 'Последнее поздравление завершено';
+  epEndActionBtn.textContent = hasNext ? '▶ Смотреть сейчас' : '↻ Пересмотреть с первого видео';
+  document.getElementById('epEndCloseBtn').style.display = isLast ? 'block' : 'none';
+  epPlayerEndcard.classList.add('active');
+  epPlayerEndcard.setAttribute('aria-hidden', 'false');
+  clearInterval(endCountdown);
+  if(hasNext){
+    endCountdown = setInterval(()=>{
+      countdown--;
+      if(countdown > 0){
+        epEndCopy.textContent = `Следующее поздравление через ${countdown}`;
+      } else {
+        clearInterval(endCountdown);
+        epEndCopy.textContent = 'Следующее поздравление сейчас';
+        playAdjacentEpisode(1);
+      }
+    }, 1000);
+  }
+}
+
+function showControls(){
+  epPlayerUI.classList.remove('hidden');
+  scheduleHideControls();
+}
+
+function scheduleHideControls(){
+  clearTimeout(uiHideTimer);
+  uiHideTimer = setTimeout(()=>{
+    epPlayerUI.classList.add('hidden');
+  }, 2500);
+}
+
+function pointerToProgress(clientX, clientY){
+  const rect = epProgressLine.getBoundingClientRect();
+  if(rect.width <= 0 && rect.height <= 0) return 0;
+
+  const forced = epPlayer.classList.contains('force-landscape');
+  let pct;
+  if(forced){
+    // rotate(90deg): local horizontal axis becomes vertical on screen.
+    // Local 0 (start) → top of AABB, local 1 (end) → bottom.
+    // If inverted on device: pct = 1 - (clientY - rect.top) / span
+    const span = rect.height || 1;
+    pct = (clientY - rect.top) / span;
+  } else {
+    const span = rect.width || 1;
+    pct = (clientX - rect.left) / span;
+  }
+  return Math.min(1, Math.max(0, pct));
+}
+
+let scrubTargetTime = null;
+let scrubSeekRaf = null;
+
+function flushScrubSeek(){
+  scrubSeekRaf = null;
+  if(scrubTargetTime == null || !epPlayerVideo.duration) return;
+  try { epPlayerVideo.currentTime = scrubTargetTime; } catch(_){}
+}
+
+function setProgressFromPointer(clientX, clientY, {seek = true, immediate = false} = {}){
+  const pct = pointerToProgress(clientX, clientY);
+  // Instant visual feedback (don't wait for video seek / timeupdate)
+  epProgressFilled.style.width = `${pct * 100}%`;
+  epProgressHandle.style.left = `${pct * 100}%`;
+  if(epPlayerVideo.duration){
+    const t = pct * epPlayerVideo.duration;
+    epCurrentTime.textContent = formatTime(t);
+    if(seek){
+      scrubTargetTime = t;
+      if(immediate){
+        if(scrubSeekRaf){ cancelAnimationFrame(scrubSeekRaf); scrubSeekRaf = null; }
+        flushScrubSeek();
+      } else if(!scrubSeekRaf){
+        // Coalesce seeks to one per frame — kills lag without losing responsiveness
+        scrubSeekRaf = requestAnimationFrame(flushScrubSeek);
+      }
+    }
+  }
+  return pct;
+}
+
+function updateNavButtons(){
+  const isFirst = currentIndex <= 0;
+  const isLast = currentIndex >= CONFIG.episodes.length - 1;
+  epPrevBtn.disabled = isFirst;
+  epNextBtn.disabled = isLast;
+}
+
+function openEpisodePlayer(episode, card){
+  pauseBaseVideos();
+  currentEpCard = card;
+  currentEpisode = episode;
+  currentIndex = Number(card.dataset.i);
+  markWatched(card);
+  attachEpisodePreview(episode, card);
+  epPlayerStage.classList.remove('portrait', 'landscape', 'has-video');
+  epPlayerVideo.pause();
+  epPlayerVideo.removeAttribute('src');
+  epPlayerVideo.load();
+  resetEndcard();
+  setPlayState();
+  epCurrentTime.textContent = '0:00';
+  epDuration.textContent = '0:00';
+  epProgressFilled.style.width = '0%';
+  epProgressHandle.style.left = '0%';
+
+  epPlayerTitle.textContent = episode.title;
+  epPlayerWho.textContent = episode.who;
+  epPlayer.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  epPlayerVideo.src = episode.src || '';
+  if(episode.src){
+    epPlayerStage.classList.add('has-video');
+    epPlayerVideo.play().catch(()=>{});
+  }
+  updateNavButtons();
+  showControls();
+}
+
+function togglePlay(){
+  if(epPlayerVideo.paused){
+    epPlayerVideo.play().catch(()=>{});
+  } else {
+    epPlayerVideo.pause();
+  }
+  setPlayState();
+}
+
+function playAdjacentEpisode(direction){
+  const nextIndex = currentIndex + direction;
+  if(nextIndex < 0 || nextIndex >= CONFIG.episodes.length) return;
+  const nextEpisode = CONFIG.episodes[nextIndex];
+  const nextCard = document.querySelector(`.ep-card[data-i="${nextIndex}"]`);
+  if(nextEpisode && nextCard){
+    openEpisodePlayer(nextEpisode, nextCard);
+  }
+}
+
+function closeEpisodePlayer(){
+  epPlayer.classList.remove('active', 'force-landscape');
+  document.body.style.overflow = '';
+  epPrevBtn.disabled = true;
+  epNextBtn.disabled = true;
+  epPlayerVideo.pause();
+  epPlayerVideo.style.width = '';
+  epPlayerVideo.style.height = '';
+  epPlayerVideo.style.objectFit = '';
+  resetEndcard();
+  currentEpCard = null;
+  currentEpisode = null;
+  if(!document.getElementById('roomScene').classList.contains('active')){
+    resumeBaseVideos();
+  }
+}
+
+
+function handleEndAction(){
+  const hasNext = currentIndex < CONFIG.episodes.length - 1;
+  if(hasNext){
+    playAdjacentEpisode(1);
+  } else if(currentEpisode){
+    const firstCard = document.querySelector('.ep-card[data-i="0"]');
+    if(firstCard){
+      openEpisodePlayer(CONFIG.episodes[0], firstCard);
+    } else {
+      openEpisodePlayer(currentEpisode, currentEpCard);
+    }
+  }
+}
+
+// Orientation and metadata
+function applyVideoOrientation(){
+  if(!epPlayerVideo.videoWidth || !epPlayerVideo.videoHeight) return;
+
+  const isPortrait = epPlayerVideo.videoHeight > epPlayerVideo.videoWidth;
+  epPlayerStage.classList.toggle('portrait', isPortrait);
+  epPlayerStage.classList.toggle('landscape', !isPortrait);
+  updateDuration();
+  setPlayState();
+
+  const isMobile = /Mobi|Android|iPhone|iPad/.test(navigator.userAgent) || window.matchMedia('(max-width:600px)').matches;
+  const shouldForceLandscape = isMobile && !isPortrait && window.innerHeight > window.innerWidth;
+
+  epPlayer.classList.toggle('force-landscape', shouldForceLandscape);
+
+  if(shouldForceLandscape){
+    epPlayerVideo.style.width = '100%';
+    epPlayerVideo.style.height = '100%';
+    epPlayerVideo.style.objectFit = 'contain';
+  } else {
+    epPlayerVideo.style.width = '';
+    epPlayerVideo.style.height = '';
+    epPlayerVideo.style.objectFit = '';
+  }
+}
+
+epPlayerVideo.addEventListener('loadedmetadata', applyVideoOrientation);
+
+window.addEventListener('resize', ()=>{
+  if(!epPlayer.classList.contains('active')) return;
+  applyVideoOrientation();
+});
+
+epPlayerVideo.addEventListener('timeupdate', updateProgress);
+epPlayerVideo.addEventListener('play', setPlayState);
+epPlayerVideo.addEventListener('pause', setPlayState);
+epPlayerVideo.addEventListener('ended', ()=>{
+  if(currentEpCard) markWatched(currentEpCard);
+  showEndcard();
+});
+
+epPlayer.addEventListener('pointermove', ()=>{ showControls(); }, {passive:true});
+epPlayer.addEventListener('pointerdown', ()=>{ showControls(); });
+
+epPlayPauseBtn.addEventListener('click', (e)=>{ e.stopPropagation(); togglePlay(); });
+epPrevBtn.addEventListener('click', (e)=>{ e.stopPropagation(); playAdjacentEpisode(-1); });
+epNextBtn.addEventListener('click', (e)=>{ e.stopPropagation(); playAdjacentEpisode(1); });
+epEndActionBtn.addEventListener('click', (e)=>{ e.stopPropagation(); handleEndAction(); });
+document.getElementById('epEndCloseBtn').addEventListener('click', (e)=>{ e.stopPropagation(); closeEpisodePlayer(); });
+
+epProgressLine.addEventListener('pointerdown', (e)=>{
+  e.preventDefault();
+  e.stopPropagation();
+  trackingProgress = true;
+  // Capture pointer so drag continues even if finger leaves the thin bar
+  try { epProgressLine.setPointerCapture(e.pointerId); } catch(_){}
+  setProgressFromPointer(e.clientX, e.clientY, {seek: true, immediate: true});
+  showControls();
+
+  const onMove = (moveEvent)=>{
+    moveEvent.preventDefault();
+    // Visual every move; seek coalesced to 1/frame to avoid lag
+    setProgressFromPointer(moveEvent.clientX, moveEvent.clientY, {seek: true});
+  };
+  const onUp = (upEvent)=>{
+    trackingProgress = false;
+    // Final precise seek on release
+    setProgressFromPointer(upEvent.clientX, upEvent.clientY, {seek: true, immediate: true});
+    scrubTargetTime = null;
+    try { epProgressLine.releasePointerCapture(upEvent.pointerId); } catch(_){}
+    document.removeEventListener('pointermove', onMove);
+    document.removeEventListener('pointerup', onUp);
+    document.removeEventListener('pointercancel', onUp);
+    scheduleHideControls();
+  };
+  document.addEventListener('pointermove', onMove, {passive: false});
+  document.addEventListener('pointerup', onUp);
+  document.addEventListener('pointercancel', onUp);
+});
+
+/* volume event handlers removed */
+
+document.getElementById('epPlayerClose').addEventListener('click', closeEpisodePlayer);
+epPlayer.addEventListener('click', (e)=>{
+  if(e.target === epPlayer) closeEpisodePlayer();
+});
+
+const introOverlay = document.getElementById('intro-overlay');
+const introVideo = document.getElementById('intro-video');
+const startVideoBtn = document.getElementById('start-video-btn');
+const skipIntroBtn = document.getElementById('skip-intro');
+const readyQuestion = document.getElementById('ready-question');
+const fireFinal = document.getElementById('fire-final');
+const fireNumber = document.getElementById('fire-number');
+const playPrompt = document.getElementById('play-prompt');
+
+function hideIntroOverlay(){
+  introOverlay.style.transition = 'opacity .7s ease';
+  introOverlay.style.opacity = '0';
+  document.body.style.overflow = '';
+  setTimeout(()=>{
+    introOverlay.remove();
+    resumeBaseVideos();
+  }, 700);
+}
+
+function showReadyQuestion(){
+  playPrompt.classList.add('hidden');
+  readyQuestion.classList.remove('hidden');
+  fireFinal.classList.add('hidden');
+  introVideo.style.opacity = '0';
+}
+
+function showFireFinal(){
+  readyQuestion.classList.add('hidden');
+  fireFinal.classList.remove('hidden');
+  fireNumber.style.opacity = '0';
+  fireNumber.style.transform = 'scale(.5)';
+  setTimeout(()=>{
+    fireNumber.style.opacity = '1';
+    fireNumber.style.transform = 'scale(1)';
+  }, 120);
+  setTimeout(hideIntroOverlay, 2400);
+}
+
+startVideoBtn.addEventListener('click', ()=>{
+  playPrompt.classList.add('hidden');
+  readyQuestion.classList.add('hidden');
+  fireFinal.classList.add('hidden');
+  introVideo.style.opacity = '1';
+  introVideo.play().catch(()=>{});
+});
+
+skipIntroBtn.addEventListener('click', ()=>{
+  introVideo.pause();
+  showReadyQuestion();
+});
+
+introVideo.addEventListener('ended', ()=>{
+  showReadyQuestion();
+});
+
+readyQuestion.querySelectorAll('.start-btn').forEach((button)=>{
+  button.addEventListener('click', showFireFinal);
+});
+
+showControls();
+
+</script>
 </body>
 </html>
