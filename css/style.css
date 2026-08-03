@@ -53,8 +53,18 @@ html, body {
 }
 
 /* ==========================================================================
-   VIEWPORT & PARALLAX TRACK
+   VIEWPORT & PARALLAX TRACK (С поддержкой плавных мобильных свайпов)
    ========================================================================== */
+
+#cinematic-viewport,
+#world-track,
+.universe-section,
+.layer-photos,
+.photo-card,
+.photo-img {
+    touch-action: none;             /* Блокирует системный перехват свайпа браузером */
+    -webkit-user-drag: none;        /* Запрещает стандартное перетаскивание картинок */
+}
 
 #cinematic-viewport {
     position: absolute;

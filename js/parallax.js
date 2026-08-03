@@ -11,11 +11,13 @@ export class ParallaxEngine {
         this.targetX = 0;
         this.maxScrollX = 0;
         
+        // Touch & Drag State
         this.isDragging = false;
         this.startX = 0;
         this.dragStartX = 0;
+        this.lastX = 0;
+        this.velocity = 0; // Для физики инерции свайпа
 
-        // Синхронизировано с шириной 3200px
         this.universeWidth = 3200;
         this.currentUniverseIndex = -1;
 
@@ -85,41 +87,66 @@ export class ParallaxEngine {
     initEvents() {
         window.addEventListener('resize', () => this.updateMaxScroll());
 
+        // Колесико мыши
         window.addEventListener('wheel', (e) => {
             if (this.isJourneyEnded || !this.isInitialReady) return;
             this.pauseAutoScroll();
 
             const delta = e.deltaY !== 0 ? e.deltaY : e.deltaX;
-            this.targetX += delta * 1.2;
+            this.targetX += delta * 1.5;
             this.targetX = clamp(this.targetX, 0, this.maxScrollX);
 
             this.scheduleResumeAutoScroll();
         }, { passive: true });
 
+        // Начало нажатия пальцем / мышкой
         this.container.addEventListener('pointerdown', (e) => {
             if (this.isJourneyEnded || !this.isInitialReady) return;
+            if (e.button && e.button !== 0) return; // Игнорируем правую кнопку мыши
+
             this.pauseAutoScroll();
             this.isDragging = true;
             this.startX = e.clientX;
+            this.lastX = e.clientX;
             this.dragStartX = this.targetX;
+            this.velocity = 0;
+
+            try {
+                this.container.setPointerCapture(e.pointerId);
+            } catch (err) {}
         });
 
-        window.addEventListener('pointermove', (e) => {
+        // Движение пальцем / мышкой
+        this.container.addEventListener('pointermove', (e) => {
             if (!this.isDragging || this.isJourneyEnded || !this.isInitialReady) return;
             this.pauseAutoScroll();
-            const diff = this.startX - e.clientX;
-            this.targetX = clamp(this.dragStartX + diff * 1.5, 0, this.maxScrollX);
+
+            // Расчет скорости для инерции
+            const deltaX = this.lastX - e.clientX;
+            this.velocity = deltaX;
+            this.lastX = e.clientX;
+
+            const totalDiff = this.startX - e.clientX;
+            this.targetX = clamp(this.dragStartX + totalDiff * 1.8, 0, this.maxScrollX);
         });
 
-        const stopDrag = () => {
+        // Отпускание пальца / мыши
+        const stopDrag = (e) => {
             if (this.isDragging) {
                 this.isDragging = false;
+                try {
+                    this.container.releasePointerCapture(e.pointerId);
+                } catch (err) {}
+
+                // Добавляем инерцию свайпа при резком смахивании пальцем
+                this.targetX = clamp(this.targetX + this.velocity * 12, 0, this.maxScrollX);
+
                 this.scheduleResumeAutoScroll();
             }
         };
 
-        window.addEventListener('pointerup', stopDrag);
-        window.addEventListener('pointercancel', stopDrag);
+        this.container.addEventListener('pointerup', stopDrag);
+        this.container.addEventListener('pointercancel', stopDrag);
     }
 
     render() {
@@ -141,7 +168,6 @@ export class ParallaxEngine {
         this.track.style.transform = `translate3d(${-this.currentX}px, 0, 0)`;
 
         const sections = document.querySelectorAll('.universe-section');
-        // Исправлена опечатка: было section.forEach, стало sections.forEach
         sections.forEach((section) => {
             const bg = section.querySelector('.layer-bg');
             const photos = section.querySelector('.layer-photos');
