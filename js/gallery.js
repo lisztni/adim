@@ -1,7 +1,7 @@
 import { randomRange, randomInt, BASE_ASSETS_URL } from './utils.js';
 
 export const UNIVERSES = [
-    { id: 'misto', title: 'С ДНЁМ РОЖДЕНИЯЯЯЯ!!', chapter: '', video: 'backgrounds/misto.mp4', bgColor: '#121218', volume: 0.03, darkness: 0.0 },
+    { id: 'misto', title: 'С ДНЁМ РОЖДЕНИЯЯ!!', chapter: '', video: 'backgrounds/misto.mp4', bgColor: '#121218', volume: 0.03, darkness: 0.0 },
     { id: 'stranger-things', title: '', chapter: 'Stranger Things', video: 'backgrounds/stranger-things.mp4', bgColor: '#0f0507', volume: 0.12, darkness: 0.0 },
     { id: 'spider-man', title: '', chapter: 'Spider-Man', video: 'backgrounds/spider-man.mp4', bgColor: '#050c1e', volume: 0.1, darkness: 0.0 },
     { id: 'apothecary-diaries', title: '', chapter: 'The Apothecary Diaries', video: 'backgrounds/apothecary-diaries.mp4', bgColor: '#061a14', volume: 0.07, darkness: 0.0 },

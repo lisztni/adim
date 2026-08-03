@@ -176,13 +176,12 @@ html, body {
     display: block;
     width: auto;
     height: auto;
-    max-width: 460px;   /* Увеличена макс. ширина для ПК */
-    max-height: 55vh;   /* Высота для ПК */
+    max-width: 460px;   /* Высота и ширина для ПК */
+    max-height: 55vh;
     
     border-radius: 4px;
     background-color: transparent;
     
-    /* Пунктирная обводка точно по контуру */
     border: 2px dashed rgba(243, 206, 114, 0.45);
     padding: 3px;
     
@@ -190,18 +189,25 @@ html, body {
     transition: border-color 0.35s ease, filter 0.35s ease, box-shadow 0.35s ease;
 }
 
-/* Эффект при наведении */
 .photo-card:hover .photo-img {
     border-color: rgba(243, 206, 114, 0.95);
     box-shadow: 0 0 20px rgba(243, 206, 114, 0.4);
     filter: sepia(0) contrast(1.1) saturate(1.1);
 }
 
-/* СПЕЦИАЛЬНО ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ (Альбомный режим) */
+/* ДЛЯ СМАРТФОНОВ ВЕРТИКАЛЬНО (Portrait) */
+@media (max-width: 768px) {
+    .photo-img {
+        max-width: 82vw;  /* Качественное отображение во всю ширину экрана */
+        max-height: 48vh;
+    }
+}
+
+/* ДЛЯ СМАРТФОНОВ ГОРИЗОНТАЛЬНО (Landscape) */
 @media (max-height: 600px) {
     .photo-img {
-        max-height: 68vh; /* Значительно крупнее на смартфонах */
         max-width: 70vw;
+        max-height: 68vh;
     }
 }
 
@@ -238,7 +244,7 @@ html, body {
 
 #world-title-text {
     font-family: var(--font-heading);
-    font-size: 3.5rem;
+    font-size: 1.5rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: #ffffff;
@@ -439,7 +445,6 @@ html, body {
     text-align: center;
     padding: 35px 30px;
     background: rgba(15, 15, 22, 0.92);
-    border: 1px solid rgba(243, 206, 114, 0.4);
     border-radius: 16px;
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 40px var(--gold-glow);
     max-width: 500px;
@@ -447,15 +452,15 @@ html, body {
 }
 
 .end-title {
-    font-family: var(--font-heading);
-    font-size: 2.2rem;
+    font-family: var(--font-body);
+    font-size: 1.4rem;
     color: var(--gold);
     margin-bottom: 10px;
     letter-spacing: 0.1em;
 }
 
 .end-subtitle {
-    font-size: 1.1rem;
+    font-size: 0.6rem;
     color: #d1d5db;
     margin-bottom: 30px;
 }
@@ -474,7 +479,7 @@ html, body {
     padding: 14px 24px;
     border-radius: 30px;
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     cursor: pointer;
