@@ -25,7 +25,7 @@ export class ParallaxEngine {
         this.isInitialReady = false;
         this.isPausedByModal = false;
         this.isJourneyEnded = false;
-        this.autoScrollSpeed = 1.8;
+        this.autoScrollSpeed = 3;
         this.resumeTimeout = null;
         this.resumeDelay = 2500;
 
